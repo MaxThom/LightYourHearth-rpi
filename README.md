@@ -1,4 +1,4 @@
-# LightYourHearth
+# Project LightYourHearth
 The goal of this project is to connect a rpi with ledstrips with individually adressable leds.
 It will then be contrallable with a bluetooth connection using a phone app.
 
