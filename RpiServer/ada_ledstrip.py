@@ -14,4 +14,8 @@ class AdaLedstrip:
         self.pixels.show()
 
         LedUtil.rainbow_cycle(self.pixels, wait=0.0005)
+
+    def pixel_off(self):
+        self.pixels.clear()
+        self.pixels.show()
         

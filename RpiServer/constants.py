@@ -1,4 +1,6 @@
 BLUETOOTH_DISCONNECT = "Disconnect"
+LED_ON = "Led_On"
+LED_OFF = "Led_Off"
 
 PIXEL_COUNT = 64
 SPI_PORT   = 0

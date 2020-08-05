@@ -19,6 +19,7 @@ class BluetoothComm:
         while res != constants.BLUETOOTH_DISCONNECT:
             try:
                 res = self.client_socket.recv(1024)
+                res = res.decode('utf_8').rstrip("\r\n").rstrip("\n").rstrip("\r")
             except:
                 res = constants.BLUETOOTH_DISCONNECT
                 self.server_socket.close()
