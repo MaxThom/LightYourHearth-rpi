@@ -30,7 +30,7 @@ class BluetoothComm:
 
     def read_comm(self, callback):
         res = ""
-        while and res != constants.BLUETOOTH_DISCONNECT:
+        while res != constants.BLUETOOTH_DISCONNECT:
             try:
                 res = self.client_socket.recv(1024)
             except:
