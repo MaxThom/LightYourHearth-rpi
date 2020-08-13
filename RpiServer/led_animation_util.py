@@ -18,6 +18,8 @@ def wheel(pos):
  
 # Define rainbow cycle function to do a cycle of all hues.
 def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
+    pixels.clear()
+    pixels.show()
     for i in range(pixels.count()):
         # tricky math! we use each pixel as a fraction of the full 96-color wheel
         # (thats the i / strip.numPixels() part)
@@ -33,6 +35,8 @@ def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
             break
  
 def rainbow_cycle(pixels, isCancelled, wait=0.005):
+    pixels.clear()
+    pixels.show()
     for j in range(256): # one cycle of all 256 colors in the wheel
         for i in range(pixels.count()):
             pixels.set_pixel(i, wheel(((i * 256 // pixels.count()) + j) % 256) )
@@ -45,6 +49,8 @@ def rainbow_cycle(pixels, isCancelled, wait=0.005):
             break
  
 def rainbow_colors(pixels, isCancelled, wait=0.05):
+    pixels.clear()
+    pixels.show()
     for j in range(256): # one cycle of all 256 colors in the wheel
         for i in range(pixels.count()):
             pixels.set_pixel(i, wheel(((256 // pixels.count() + j)) % 256) )
@@ -73,6 +79,8 @@ def brightness_decrease(pixels, isCancelled, wait=0.01, step=1):
             break
  
 def blink_color(pixels, isCancelled, blink_times=5, wait=0.5, color=(255,0,0)):
+    pixels.clear()
+    pixels.show()
     for i in range(blink_times):
         # blink two times, then wit
         pixels.clear()
@@ -95,6 +103,8 @@ def blink_color(pixels, isCancelled, blink_times=5, wait=0.5, color=(255,0,0)):
             break
  
 def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
+    pixels.clear()
+    pixels.show()
     pos = 0
     for i in range(pixels.count()):
         for j in reversed(range(i, pixels.count())):

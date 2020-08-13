@@ -23,7 +23,7 @@ class AdaLedstrip:
         self.__execute_task(LedUtil.rainbow_cycle_successive, (self.pixels, lambda: self.cancelTask, 0.1))
 
     def pixel_brightness_decrease(self):
-        self.__execute_task(LedUtil.brightness_decrease, (self.pixels, lambda: self.cancelTask, 0.1, 1))
+        self.__execute_task(LedUtil.brightness_decrease, (self.pixels, lambda: self.cancelTask, 0.01, 1))
 
     def pixel_blink_color(self):
         self.__execute_task(LedUtil.blink_color, (self.pixels, lambda: self.cancelTask, 5, 0.1, (255, 127, 64)))
@@ -37,7 +37,7 @@ class AdaLedstrip:
         self.pixels.show()
 
     def __execute_task(self, task, args):
-        self.pixel_off()
+        self.__cancel_task()
         self.onGoingTask = threading.Thread(target=task, args=args)
         self.onGoingTask.start()
 
