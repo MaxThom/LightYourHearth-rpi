@@ -86,7 +86,8 @@ def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
         pixels.clear()
         for j in range(2):
             for k in range(pixels.count()):
-                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[0], color[1], color[2] ))                
+                # LedStrip is bgr and not rgb  
+                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[2], color[1], color[0] ))
             if (isCancelled()):
                 break
             pixels.show()
@@ -111,9 +112,9 @@ def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
             pixels.clear()
             # first set all pixels at the begin
             for k in range(i):
-                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[0], color[1], color[2] ))
+                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[2], color[1], color[0] ))
             # set then the pixel at position j
-            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color( color[0], color[1], color[2] ))            
+            pixels.set_pixel(j, Adafruit_WS2801.RGB_to_color( color[2], color[1], color[0] ))            
             if (isCancelled()):
                 break
             pixels.show()
