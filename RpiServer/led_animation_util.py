@@ -78,15 +78,15 @@ def brightness_decrease(pixels, isCancelled, wait=0.01, step=1):
         if (isCancelled()):
             break
  
-def blink_color(pixels, isCancelled, blink_times=5, wait=0.5, color=(255,0,0)):
+def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
     pixels.clear()
     pixels.show()
-    for i in range(blink_times):
+    for i in range(blink_time):
         # blink two times, then wit
         pixels.clear()
         for j in range(2):
             for k in range(pixels.count()):
-                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[0], color[1], color[2] ))
+                pixels.set_pixel(k, Adafruit_WS2801.RGB_to_color( color[0], color[1], color[2] ))                
             if (isCancelled()):
                 break
             pixels.show()
