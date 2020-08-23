@@ -32,7 +32,13 @@ The phone app used to connect and control the ledstrip is made with Xamarin. I u
 n/a
 
 # Installation
-n/a
+ #### Rpi
+ 1. Enable SSH, VNC and SPI in interfaces configuration
+ 2. Download repo to Desktop
+ 3. Add LightYourHearth script to boot.init or crontab
+    - For crontab, open terminal and type : sudo crontab -e
+    - Add this line to start server on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth/LightYourHearth.sh >/home/pi/Desktop/Logs/cronlogs 2>&1**
+    - Save, you can confirm using sudo crontab -l
 
 # Credits
 n/a

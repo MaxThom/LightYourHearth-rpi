@@ -5,6 +5,7 @@ import constants
 import asyncio
 import pprint
 import time
+import datetime
 
 # ps -ef | grep python
 # sudo kill -9 [pid]
@@ -13,7 +14,11 @@ pixels = AdaLedstrip(constants.PIXEL_COUNT, constants.SPI_PORT, constants.SPI_DE
 blue_comm = None
 
 def main():
-    launch_bluetooth_server("")
+    try:
+        launch_bluetooth_server("")        
+    except Exception as e:         
+        log_message(e)
+        main()
 
 
 def launch_bluetooth_server(args):
@@ -51,7 +56,11 @@ def get_server_capabilities(args):
         time.sleep(0.075)
         blue_comm.send_comm("Cap:" + anim + ":" + pprint.pformat(constants.SERVER_CAPABILITIES[anim]))
         
-    
+def log_message(msg):
+    f = open("/home/pi/Desktop/Logs/LightYourHeath_Logs.txt", "a")
+    f.write("[%s] -> %s.\n" % (datetime.datetime.now(), msg))
+    f.close()
+   
 
 commandAction = {
         constants.BLUETOOTH_DISCONNECT: launch_bluetooth_server,         

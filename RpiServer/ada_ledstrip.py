@@ -14,6 +14,9 @@ class AdaLedstrip:
         self.onGoingTask = None
         self.cancelTask = False
         self.pixels = Adafruit_WS2801.WS2801Pixels(pixel_count, spi=SPI.SpiDev(spi_port, spi_device), gpio=GPIO)
+        self.pixels.clear()
+        self.pixels.set_pixel(0, Adafruit_WS2801.RGB_to_color( 255, 255, 255 ))        
+        self.pixels.show()
         print("Controlling ledstrip on spi port ", spi_port, "and on spi device ", spi_device)
 
     def pixel_rainbow_colors(self, args):
