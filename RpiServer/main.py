@@ -2,13 +2,14 @@ from blue_connect import BluetoothComm
 from ada_ledstrip import AdaLedstrip
 import subprocess
 import constants
-import asyncio
 import pprint
 import time
 import datetime
 
 # ps -ef | grep python
 # sudo kill -9 [pid]
+# pip freeze > requirements.txt
+# pip install -r requirements.txt
 
 pixels = AdaLedstrip(constants.PIXEL_COUNT, constants.SPI_PORT, constants.SPI_DEVICE)
 blue_comm = None

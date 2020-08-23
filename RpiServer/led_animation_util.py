@@ -1,6 +1,5 @@
 # Simple demo of of the WS2801/SPI-like addressable RGB LED lights.
 import time
-import asyncio
 # Import the WS2801 module.
 import Adafruit_WS2801
 import Adafruit_GPIO.SPI as SPI 

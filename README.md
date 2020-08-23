@@ -34,10 +34,18 @@ n/a
 # Installation
  #### Rpi
  1. Enable SSH, VNC and SPI in interfaces configuration
- 2. Download repo to Desktop
- 3. Add LightYourHearth script to boot.init or crontab
+ 2. Install bluetooth components
+    - sudo apt-get install bluetooth bluez blueman
+    - sudo apt-get install python-bluetooth
+ 3. Add SP profile to bluetooth
+    - sudo nano /etc/systemd/system/dbus-org.bluez.service
+    - A file will open and add the compatibility flag, ' -C', at the end of the 'ExecStart=' line. Add a new line after that to add the SP profile. The two lines should look like this:
+        - ExecStart=/usr/lib/bluetooth/bluetoothd -C
+        - ExecStartPost=/usr/bin/sdptool add SP
+ 4. Download repo to Desktop
+ 5. Add LightYourHearth script to boot.init or crontab
     - For crontab, open terminal and type : sudo crontab -e
-    - Add this line to start server on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth/LightYourHearth.sh >/home/pi/Desktop/Logs/cronlogs 2>&1**
+    - Add this line to start server on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth-rpi/LightYourHearth.sh >/home/pi/Desktop/LightYourHearth-rpi/Logs/cronlogs 2>&1**
     - Save, you can confirm using sudo crontab -l
 
 # Credits

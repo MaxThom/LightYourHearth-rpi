@@ -1,5 +1,4 @@
 import led_animation_util as LedUtil
-import asyncio
 import threading
 import time
 import RPi.GPIO as GPIO
