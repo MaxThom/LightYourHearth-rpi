@@ -4,7 +4,7 @@ from rpi_ws281x import Color, PixelStrip, ws
 
 
 # LED strip configuration:
-LED_COUNT = 40         # Number of LED pixels.
+LED_COUNT = 300         # Number of LED pixels.
 LED_PIN = 18           # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10           # DMA channel to use for generating signal (try 10)
@@ -81,11 +81,40 @@ def theaterChaseRainbow(strip, wait_ms=50):
 # Main program logic follows:
 if __name__ == '__main__':
     # Create NeoPixel object with appropriate configuration.
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+    colorWipe(strip, Color(0, 255 , 0, 0), 0)
+    time.sleep(3.0)
+
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 127, LED_CHANNEL, LED_STRIP)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+    colorWipe(strip, Color(0, 255, 0, 0), 0)
+    time.sleep(3.0)
+
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 64, LED_CHANNEL, LED_STRIP)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+    colorWipe(strip, Color(0, 255, 0, 0), 0)
+    time.sleep(3.0)
+
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 10, LED_CHANNEL, LED_STRIP)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
+
+    colorWipe(strip, Color(0, 255, 0, 0), 0)
+    time.sleep(3.0)
+
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    
+    colorWipe(strip, Color(0, 255, 0, 0), 0)
+
     print('Press Ctrl-C to quit.')
     while True:
         # Color wipe animations.
@@ -105,4 +134,4 @@ if __name__ == '__main__':
         # Rainbow animations.
         rainbow(strip)
         rainbowCycle(strip)
-        theaterChaseRainbow(strip)
+        theaterChaseRainbow(strip) 

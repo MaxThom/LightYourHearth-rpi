@@ -1,5 +1,5 @@
 from blue_connect import BluetoothComm 
-from ada_ledstrip import AdaLedstrip
+from ledstrip import Ledstrip
 import subprocess
 import constants
 import pprint
@@ -11,7 +11,7 @@ import datetime
 # pip freeze > requirements.txt
 # pip install -r requirements.txt
 
-pixels = AdaLedstrip(constants.PIXEL_COUNT, constants.SPI_PORT, constants.SPI_DEVICE)
+pixels = Ledstrip(constants.PIXEL_COUNT, constants.SPI_PORT, constants.SPI_DEVICE)
 blue_comm = None
 
 def main():
@@ -58,7 +58,7 @@ def get_server_capabilities(args):
         blue_comm.send_comm("Cap:" + anim + ":" + pprint.pformat(constants.SERVER_CAPABILITIES[anim]))
         
 def log_message(msg):
-    f = open("/home/pi/Desktop/Logs/LightYourHeath_Logs.txt", "a")
+    f = open("/home/pi/Desktop/LightYourHearth-rpi/Logs/LightYourHeath_Logs.txt", "a")
     f.write("[%s] -> %s.\n" % (datetime.datetime.now(), msg))
     f.close()
    

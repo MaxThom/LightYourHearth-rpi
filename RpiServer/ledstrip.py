@@ -8,7 +8,7 @@ import pprint
 import constants
 from PIL import ImageColor
 
-class AdaLedstrip:
+class Ledstrip:
     def __init__(self, pixel_count, spi_port, spi_device):
         self.onGoingTask = None
         self.cancelTask = False
