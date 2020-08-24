@@ -11,7 +11,7 @@ import datetime
 # pip freeze > requirements.txt
 # pip install -r requirements.txt
 
-pixels = Ledstrip(constants.PIXEL_COUNT, constants.SPI_PORT, constants.SPI_DEVICE)
+pixels = Ledstrip()
 blue_comm = None
 
 def main():
@@ -72,6 +72,7 @@ commandAction = {
         constants.LED_BRIGHTNESS_DECREASE: pixels.pixel_brightness_decrease,
         constants.LED_BLINK_COLOR: pixels.pixel_blink_color,
         constants.LED_APPEAR_FROM_BACK: pixels.pixel_appear_from_back,
+        constants.LED_COLOR_WIPE: pixels.pixel_color_wipe,
         constants.LED_SETTINGS: pixels.set_settings,
         constants.LED_ANIMATION_CAPABILITIES: get_server_capabilities
     }
