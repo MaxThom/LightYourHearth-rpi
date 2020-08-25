@@ -20,9 +20,12 @@ def wheel(pos):
         return Color(0, pos * 3, 255 - pos * 3)
  
 def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255)):
+    clear(pixels)
     for i in range(pixels.numPixels()):
         pixels.setPixelColor(i, Color(color[2], color[1], color[0] ))
         if (wait != 0.0):
+            if (isCancelled()):
+                break
             time.sleep(wait)
             pixels.show()
     pixels.show()
@@ -37,25 +40,29 @@ def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
         # the % 96 is to make the wheel cycle around
         pixels.setPixelColor(i, wheel(((i * 256 // pixels.numPixels())) % 256) )
         if (isCancelled()):
-            break
+            return
         pixels.show()
         if wait > 0:
             time.sleep(wait)
         if (isCancelled()):
-            break
+            return
  
-def rainbow_cycle(pixels, isCancelled, wait=0.005):
+def rainbow_cycle(pixels, isCancelled, wait=0.005, loop=0):
     clear(pixels)
-    for j in range(256): # one cycle of all 256 colors in the wheel
-        for i in range(pixels.numPixels()):
-            pixels.setPixelColor(i, wheel(((i * 256 // pixels.numPixels()) + j) % 256) )
-        if (isCancelled()):
-            break
-        pixels.show()
-        if wait > 0:
-            time.sleep(wait)
-        if (isCancelled()):
-            break
+    if (loop == 0):
+        loop = 9223372036854775807
+
+    for k in range(loop):
+        for j in range(256): # one cycle of all 256 colors in the wheel
+            for i in range(pixels.numPixels()):
+                pixels.setPixelColor(i, wheel(((i * 256 // pixels.numPixels()) + j) % 256) )
+            if (isCancelled()):
+                return
+            pixels.show()
+            if wait > 0:
+                time.sleep(wait)
+            if (isCancelled()):
+                return
  
 def rainbow_colors(pixels, isCancelled, wait=0.05):
     clear(pixels)
@@ -63,28 +70,28 @@ def rainbow_colors(pixels, isCancelled, wait=0.05):
         for i in range(pixels.numPixels()):
             pixels.setPixelColor(i, wheel(((256 // pixels.numPixels() + j)) % 256) )
         if (isCancelled()):
-            break
+            return
         pixels.show()
         if wait > 0:
             time.sleep(wait)
         if (isCancelled()):
-                break
+                return
  
 def brightness_decrease(pixels, isCancelled, wait=0.01, step=1):
     for j in range(int(256 // step)):
         for i in range(pixels.numPixels()):
-            r, g, b = pixels.getPixelColorRGB(i)
-            r = int(max(0, r - step))
-            g = int(max(0, g - step))
-            b = int(max(0, b - step))
+            c = pixels.getPixelColorRGB(i)
+            r = int(max(0, c.r - step))
+            g = int(max(0, c.g - step))
+            b = int(max(0, c.b - step))
             pixels.setPixelColor(i, Color(r, g, b))
         if (isCancelled()):
-            break
+            return
         pixels.show()
         if wait > 0:
             time.sleep(wait)
         if (isCancelled()):
-            break
+            return
  
 def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
     clear(pixels)
@@ -96,18 +103,18 @@ def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
                 # LedStrip is bgr and not rgb  
                 pixels.setPixelColor(k, Color(color[2], color[1], color[0] ))
             if (isCancelled()):
-                break
+                return
             pixels.show()
             time.sleep(0.08)
             clear(pixels)
             if (isCancelled()):
-                break
+                return
             time.sleep(0.08)
             if (isCancelled()):
-                break
+                return
         time.sleep(wait)
         if (isCancelled()):
-            break
+            return
  
 def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
     clear(pixels)
@@ -121,8 +128,8 @@ def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
             # set then the pixel at position j
             pixels.setPixelColor(j, Color( color[2], color[1], color[0] ))            
             if (isCancelled()):
-                break
+                return
             pixels.show()
             time.sleep(0.02)
             if (isCancelled()):
-                break
+                return

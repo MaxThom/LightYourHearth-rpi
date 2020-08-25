@@ -54,7 +54,13 @@ SERVER_CAPABILITIES = {
                 "type": "double", 
                 "default_value": 0.005, 
                 "min_value": 0, 
-                "max_value": 1 
+                "max_value": 0.1 
+            },
+            "loop": { 
+                "type": "int", 
+                "default_value": 0, 
+                "min_value": 0, 
+                "max_value": 100 
             } 
         },
         LED_RAINBOW_CYCLE_SUCCESSIVE: {

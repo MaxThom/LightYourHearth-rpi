@@ -16,6 +16,13 @@ LED_STRIP = ws.SK6812_STRIP_RGBW
 
 
 # Define functions which animate LEDs in various ways.
+def colorStraight(strip, color, wait_ms=50):
+    """Wipe color across display a pixel at a time."""
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color)
+    strip.show()
+
+# Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):
     """Wipe color across display a pixel at a time."""
     for i in range(strip.numPixels()):
@@ -85,21 +92,21 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    colorWipe(strip, Color(0, 255 , 0, 0), 0)
+    colorStraight(strip, Color(255, 255 , 255, 255), 0)
     time.sleep(3.0)
 
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 127, LED_CHANNEL, LED_STRIP)
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    colorWipe(strip, Color(0, 255, 0, 0), 0)
+    colorStraight(strip, Color(255, 255, 255, 0), 0)
     time.sleep(3.0)
 
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 64, LED_CHANNEL, LED_STRIP)
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    colorWipe(strip, Color(0, 255, 0, 0), 0)
+    colorStraight(strip, Color(0, 0, 0, 255), 0)
     time.sleep(3.0)
 
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 10, LED_CHANNEL, LED_STRIP)
