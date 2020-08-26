@@ -61,6 +61,10 @@ SERVER_CAPABILITIES = {
                 "default_value": 0, 
                 "min_value": 0, 
                 "max_value": 100 
+            },
+            "loop_forever": {
+                "type": "boolean", 
+                "default_value": "True",
             } 
         },
         LED_RAINBOW_CYCLE_SUCCESSIVE: {
@@ -79,7 +83,7 @@ SERVER_CAPABILITIES = {
                 "max_value": 1 
             },
             "step": { 
-                "type": "double", 
+                "type": "int", 
                 "default_value": 1, 
                 "min_value": 1, 
                 "max_value": 100 

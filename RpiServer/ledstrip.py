@@ -23,7 +23,7 @@ class Ledstrip:
         self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
 
     def pixel_rainbow_cycle(self, args):
-        self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, float(args["wait"]), int(args["loop"])))
+        self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, float(args["wait"]), int(args["loop"]), bool(args["loop_forever"])))
 
     def pixel_rainbow_cycle_successive(self, args):
         self.__execute_task(LedUtil.rainbow_cycle_successive, (self.pixels, lambda: self.cancelTask, float(args["wait"])))

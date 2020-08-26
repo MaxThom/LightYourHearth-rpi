@@ -47,12 +47,12 @@ def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
         if (isCancelled()):
             return
  
-def rainbow_cycle(pixels, isCancelled, wait=0.005, loop=0):
+def rainbow_cycle(pixels, isCancelled, wait=0.005, loop=0, loop_forever=True):
     clear(pixels)
-    if (loop == 0):
-        loop = 9223372036854775807
+    if (loop == 0 or loop_forever):
+        loop_forever = True
 
-    for k in range(loop):
+    while (loop_forever):
         for j in range(256): # one cycle of all 256 colors in the wheel
             for i in range(pixels.numPixels()):
                 pixels.setPixelColor(i, wheel(((i * 256 // pixels.numPixels()) + j) % 256) )
