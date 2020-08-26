@@ -35,15 +35,16 @@ n/a
  #### Rpi
  1. Enable SSH, VNC and SPI in interfaces configuration
  2. Install bluetooth components
-    - sudo apt-get install bluetooth bluez blueman
+    - sudo apt-get install bluetooth bluez blueman libbluetooth-dev
     - sudo apt-get install python-bluetooth
  3. Add SP profile to bluetooth
     - sudo nano /etc/systemd/system/dbus-org.bluez.service
     - A file will open and add the compatibility flag, ' -C', at the end of the 'ExecStart=' line. Add a new line after that to add the SP profile. The two lines should look like this:
         - ExecStart=/usr/lib/bluetooth/bluetoothd -C
         - ExecStartPost=/usr/bin/sdptool add SP
- 4. Download repo to Desktop
- 5. Add LightYourHearth script to boot.init or crontab
+ 4. Download repo to Desktop and navigate to root folder
+ 5. Install requirements : sudo pip3 install -r requirements.txt
+ 6. Add LightYourHearth script to boot.init or crontab
     - For crontab, open terminal and type : sudo crontab -e
     - Add this line to start server on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth-rpi/LightYourHearth.sh >/home/pi/Desktop/LightYourHearth-rpi/Logs/cronlogs 2>&1**
     - Save, you can confirm using sudo crontab -l
@@ -63,8 +64,8 @@ MIT
 - [ ] RPI - Remove bluetooth security when pairing a device
 - [x] APP - Create a phone app using Xamarin and learn the basics
 - [x] APP - Add bluetooth client connection
-- [ ] APP/RPI - Add handshake when initializing connections to discover servers capabilities (animations, etc)
-- [ ] APP - Create a dynamic UI for animations
+- [x] APP/RPI - Add handshake when initializing connections to discover servers capabilities (animations, etc)
+- [x] APP - Create a dynamic UI for animations
 
 *September 2020*
 - [ ] APP - Create playlist for animations
