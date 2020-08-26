@@ -9,6 +9,7 @@ LED_BRIGHTNESS_DECREASE = "Led_Brightness_Decrease"
 LED_BLINK_COLOR = "Led_Blink_Color"
 LED_APPEAR_FROM_BACK = "Led_Appear_From_Back"
 LED_COLOR_WIPE = "Led_Color_Wipe"
+LED_SET_BRIGHTNESS = "Led_Set_Brightness"
 
 LED_SETTINGS = "Led_Settings"
 LED_ANIMATION_CAPABILITIES = "Led_Animation_Capabilities"
@@ -19,7 +20,7 @@ LED_STRIP_SK6812= "SK6812"
 
 
 # LED strip configuration:
-LED_COUNT = 1          # Number of LED pixels.
+LED_COUNT = 1000          # Number of LED pixels.
 LED_PIN = 18           # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10           # DMA channel to use for generating signal (try 10)

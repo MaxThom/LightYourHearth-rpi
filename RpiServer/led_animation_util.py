@@ -22,7 +22,7 @@ def wheel(pos):
 def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255)):
     clear(pixels)
     for i in range(pixels.numPixels()):
-        pixels.setPixelColor(i, Color(color[2], color[1], color[0] ))
+        pixels.setPixelColor(i, Color(color[1], color[0], color[2] ))
         if (wait != 0.0):
             if (isCancelled()):
                 break
@@ -101,7 +101,7 @@ def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
         for j in range(2):
             for k in range(pixels.numPixels()):
                 # LedStrip is bgr and not rgb  
-                pixels.setPixelColor(k, Color(color[2], color[1], color[0] ))
+                pixels.setPixelColor(k, Color(color[1], color[0], color[2] ))
             if (isCancelled()):
                 return
             pixels.show()
@@ -124,9 +124,9 @@ def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
             clear(pixels, False)
             # first set all pixels at the begin
             for k in range(i):
-                pixels.setPixelColor(k, Color( color[2], color[1], color[0] ))
+                pixels.setPixelColor(k, Color( color[1], color[0], color[2] ))
             # set then the pixel at position j
-            pixels.setPixelColor(j, Color( color[2], color[1], color[0] ))            
+            pixels.setPixelColor(j, Color( color[1], color[0], color[2] ))            
             if (isCancelled()):
                 return
             pixels.show()

@@ -15,10 +15,12 @@ pixels = Ledstrip()
 blue_comm = None
 
 def main():
+    global blue_comm
     try:
         launch_bluetooth_server("")
     except Exception as e:         
         log_message(e)
+        blue_comm.close()
         main()
 
 def launch_bluetooth_server(args):
@@ -47,7 +49,6 @@ def on_bluetooth_message_received(msg):
         commandAction[cmd](args)
     else:
         print("Unknown command")
-        blue_comm.send_comm("Unknown command")
 
 def get_server_capabilities(args):
     global blue_comm
@@ -72,6 +73,7 @@ commandAction = {
         constants.LED_BLINK_COLOR: pixels.pixel_blink_color,
         constants.LED_APPEAR_FROM_BACK: pixels.pixel_appear_from_back,
         constants.LED_COLOR_WIPE: pixels.pixel_color_wipe,
+        constants.LED_SET_BRIGHTNESS: pixels.set_brightness,
         constants.LED_SETTINGS: pixels.set_settings,
         constants.LED_ANIMATION_CAPABILITIES: get_server_capabilities
     }

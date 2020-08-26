@@ -41,10 +41,12 @@ class BluetoothComm:
                 return res
             else:
                 return None
-
-        
  
     def send_comm(self, text):
         self.client_socket.send(text)
+
+    def close(self):
+        self.client_socket.close()
+        self.server_socket.close()
         
         

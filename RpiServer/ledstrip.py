@@ -1,4 +1,5 @@
 import led_animation_util as LedUtil
+import utilities as Util
 import threading
 import time
 from rpi_ws281x import Color, PixelStrip, ws
@@ -39,6 +40,12 @@ class Ledstrip:
         
     def pixel_color_wipe(self, args):
         self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, float(args["wait"]), ImageColor.getcolor(args["color"], "RGB")))        
+
+    def set_brightness(self, args):
+        brightness, isInt = Util.intTryParse(args["brightness"])
+        if (isInt):
+            self.pixels.setBrightness(brightness)
+            self.pixels.show()
 
     def set_settings(self, args):
         self.__cancel_task()
