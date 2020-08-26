@@ -16,11 +16,10 @@ blue_comm = None
 
 def main():
     try:
-        launch_bluetooth_server("")        
+        launch_bluetooth_server("")
     except Exception as e:         
         log_message(e)
         main()
-
 
 def launch_bluetooth_server(args):
     global blue_comm

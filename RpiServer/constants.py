@@ -13,8 +13,10 @@ LED_COLOR_WIPE = "Led_Color_Wipe"
 LED_SETTINGS = "Led_Settings"
 LED_ANIMATION_CAPABILITIES = "Led_Animation_Capabilities"
 
+LED_STRIP_WS2811 = "WS2811"
 LED_STRIP_WS2812B = "WS2812B"
 LED_STRIP_SK6812= "SK6812"
+
 
 # LED strip configuration:
 LED_COUNT = 1          # Number of LED pixels.

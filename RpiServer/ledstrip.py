@@ -44,9 +44,16 @@ class Ledstrip:
         self.__cancel_task()
         self.led_type = args["led_type"]
         self.led_count = int(args["led_pixel_count"])
-        if (args["led_type"] == constants.LED_STRIP_SK6812):
-            self.pixels = PixelStrip(self.led_count, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, self.brightness, constants.LED_CHANNEL, constants.LED_STRIP)
-            self.pixels.begin()
+        ledType = constants.LED_STRIP
+        if (self.led_type == constants.LED_STRIP_SK6812):
+            ledType = ws.SK6812_STRIP_RGBW
+        elif (self.led_type == constants.LED_STRIP_WS2811):
+            ledType = ws.WS2811_STRIP_RGB
+        elif (self.led_type == constants.LED_STRIP_WS2812B):
+            ledType = ws.WS2811_STRIP_RGB
+
+        self.pixels = PixelStrip(self.led_count, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, self.brightness, constants.LED_CHANNEL, ledType)
+        self.pixels.begin()
 
     def pixel_off(self, args):
         self.__cancel_task()
