@@ -1,28 +1,30 @@
 import led_animation_util as LedUtil
+import utilities as Util
 import threading
 import time
-import RPi.GPIO as GPIO
-import Adafruit_WS2801
-import Adafruit_GPIO.SPI as SPI
+from rpi_ws281x import Color, PixelStrip, ws
 import pprint
 import constants
 from PIL import ImageColor
 
 class Ledstrip:
-    def __init__(self, pixel_count, spi_port, spi_device):
+    def __init__(self):
         self.onGoingTask = None
         self.cancelTask = False
-        self.pixels = Adafruit_WS2801.WS2801Pixels(pixel_count, spi=SPI.SpiDev(spi_port, spi_device), gpio=GPIO)
-        self.pixels.clear()
-        self.pixels.set_pixel(0, Adafruit_WS2801.RGB_to_color( 255, 255, 255 ))        
+        self.brightness = constants.LED_BRIGHTNESS
+        self.pixels = PixelStrip(constants.LED_COUNT, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, constants.LED_BRIGHTNESS, constants.LED_CHANNEL, constants.LED_STRIP)
+        self.pixels.begin()
+        LedUtil.clear(self.pixels)
+        self.pixels.setPixelColor(0, Color(255, 255, 255, 255))
         self.pixels.show()
-        print("Controlling ledstrip on spi port ", spi_port, "and on spi device ", spi_device)
+        
+        print("Controlling ledstrip on pin ", constants.LED_PIN)
 
     def pixel_rainbow_colors(self, args):
         self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
 
     def pixel_rainbow_cycle(self, args):
-        self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
+        self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, float(args["wait"]), int(args["loop"]), bool(args["loop_forever"])))
 
     def pixel_rainbow_cycle_successive(self, args):
         self.__execute_task(LedUtil.rainbow_cycle_successive, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
@@ -35,17 +37,35 @@ class Ledstrip:
 
     def pixel_appear_from_back(self, args):
         self.__execute_task(LedUtil.appear_from_back, (self.pixels, lambda: self.cancelTask, ImageColor.getcolor(args["color"], "RGB")))
+        
+    def pixel_color_wipe(self, args):
+        self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, float(args["wait"]), ImageColor.getcolor(args["color"], "RGB")))        
+
+    def set_brightness(self, args):
+        brightness, isInt = Util.intTryParse(args["brightness"])
+        if (isInt):
+            self.brightness = brightness
+            self.pixels.setBrightness(brightness)
+            self.pixels.show()
 
     def set_settings(self, args):
         self.__cancel_task()
         self.led_type = args["led_type"]
         self.led_count = int(args["led_pixel_count"])
-        if (args["led_type"] == constants.TYPE_WS2812B):
-            self.pixels = Adafruit_WS2801.WS2801Pixels(int(args["led_pixel_count"]), spi=SPI.SpiDev(constants.SPI_PORT, constants.SPI_DEVICE), gpio=GPIO)
+        ledType = constants.LED_STRIP
+        if (self.led_type == constants.LED_STRIP_SK6812):
+            ledType = ws.SK6812_STRIP_RGBW
+        elif (self.led_type == constants.LED_STRIP_WS2811):
+            ledType = ws.WS2811_STRIP_RGB
+        elif (self.led_type == constants.LED_STRIP_WS2812B):
+            ledType = ws.WS2811_STRIP_RGB
+
+        self.pixels = PixelStrip(self.led_count, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, self.brightness, constants.LED_CHANNEL, ledType)
+        self.pixels.begin()
 
     def pixel_off(self, args):
         self.__cancel_task()
-        self.pixels.clear()
+        LedUtil.clear(self.pixels)
         self.pixels.show()
 
     def __execute_task(self, task, args):
