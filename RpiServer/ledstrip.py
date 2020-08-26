@@ -44,6 +44,7 @@ class Ledstrip:
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])
         if (isInt):
+            self.brightness = brightness
             self.pixels.setBrightness(brightness)
             self.pixels.show()
 
