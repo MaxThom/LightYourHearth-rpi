@@ -21,25 +21,45 @@ class Ledstrip:
         print("Controlling ledstrip on pin ", constants.LED_PIN)
 
     def pixel_rainbow_colors(self, args):
-        self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        if (isFloat):
+            self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, wait))
 
     def pixel_rainbow_cycle(self, args):
-        self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, float(args["wait"]), int(args["loop"]), bool(args["loop_forever"])))
+        loop_forever, isBool = Util.boolTryParse(args["loop_forever"])
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        loop, isInt = Util.intTryParse(args["loop"])
+        if (isBool and isFloat and isInt):
+            self.__execute_task(LedUtil.rainbow_cycle, (self.pixels, lambda: self.cancelTask, wait, loop, loop_forever))
 
     def pixel_rainbow_cycle_successive(self, args):
-        self.__execute_task(LedUtil.rainbow_cycle_successive, (self.pixels, lambda: self.cancelTask, float(args["wait"])))
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        if (isFloat):
+            self.__execute_task(LedUtil.rainbow_cycle_successive, (self.pixels, lambda: self.cancelTask, wait))
 
     def pixel_brightness_decrease(self, args):
-        self.__execute_task(LedUtil.brightness_decrease, (self.pixels, lambda: self.cancelTask, float(args["wait"]), int(args["step"])))
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        step, isInt = Util.intTryParse(args["step"])
+        if (isFloat and isInt):
+            self.__execute_task(LedUtil.brightness_decrease, (self.pixels, lambda: self.cancelTask, wait, step))
 
     def pixel_blink_color(self, args):
-        self.__execute_task(LedUtil.blink_color, (self.pixels, lambda: self.cancelTask, int(args["blink_time"]), float(args["wait"]), ImageColor.getcolor(args["color"], "RGB")))
+        color, isColor = Util.colorTryParse(args["color"])
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        blink_time, isInt = Util.intTryParse(args["blink_time"])
+        if (isColor and isFloat and isInt):
+            self.__execute_task(LedUtil.blink_color, (self.pixels, lambda: self.cancelTask, blink_time, wait, color))
 
     def pixel_appear_from_back(self, args):
-        self.__execute_task(LedUtil.appear_from_back, (self.pixels, lambda: self.cancelTask, ImageColor.getcolor(args["color"], "RGB")))
+        color, isColor = Util.colorTryParse(args["color"])
+        if (isColor):
+            self.__execute_task(LedUtil.appear_from_back, (self.pixels, lambda: self.cancelTask, color))
         
     def pixel_color_wipe(self, args):
-        self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, float(args["wait"]), ImageColor.getcolor(args["color"], "RGB")))        
+        color, isColor = Util.colorTryParse(args["color"])
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        if (isColor and isFloat):
+            self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, wait, color))        
 
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])

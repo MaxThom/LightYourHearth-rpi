@@ -24,7 +24,7 @@ LED_COUNT = 1000          # Number of LED pixels.
 LED_PIN = 18           # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10           # DMA channel to use for generating signal (try 10)
-LED_BRIGHTNESS = 255   # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 127   # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False     # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL = 0
 LED_STRIP = ws.SK6812_STRIP_RGBW
@@ -41,7 +41,7 @@ SERVER_CAPABILITIES = {
             },
             "color": { 
                 "type": "color", 
-                "default_value": "#FFFFFF"
+                "default_value": "#00000000"
             }
         },
         LED_RAINBOW_COLOR: {
@@ -107,13 +107,13 @@ SERVER_CAPABILITIES = {
             },
             "color": { 
                 "type": "color", 
-                "default_value": "#FFFFFF"
+                "default_value": "#00000000"
             }
         },
         LED_APPEAR_FROM_BACK: { 
             "color": { 
                 "type": "color", 
-                "default_value": "#1E90FF"
+                "default_value": "#00000000"
             }
         }
     }

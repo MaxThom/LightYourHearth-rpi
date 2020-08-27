@@ -58,6 +58,7 @@ def get_server_capabilities(args):
         blue_comm.send_comm("Cap:" + anim + ":" + pprint.pformat(constants.SERVER_CAPABILITIES[anim]))
         
 def log_message(msg):
+    print(msg)
     f = open("/home/pi/Desktop/LightYourHearth-rpi/Logs/LightYourHeath_Logs.txt", "a")
     f.write("[%s] -> %s.\n" % (datetime.datetime.now(), msg))
     f.close()

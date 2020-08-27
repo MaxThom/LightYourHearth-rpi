@@ -18,11 +18,12 @@ def wheel(pos):
     else:
         pos -= 170
         return Color(0, pos * 3, 255 - pos * 3)
- 
-def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255)):
+
+# WRGB 
+def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255)):
     clear(pixels)
     for i in range(pixels.numPixels()):
-        pixels.setPixelColor(i, Color(color[1], color[0], color[2] ))
+        pixels.setPixelColor(i, Color(color[2], color[1], color[3],  color[0]))
         if (wait != 0.0):
             if (isCancelled()):
                 break
