@@ -1,5 +1,6 @@
 # My Stuff
-Logs/
+Logs/*
+!Logs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
