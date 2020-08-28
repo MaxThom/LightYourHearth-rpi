@@ -1,4 +1,7 @@
 #!/bin/sh
 
+cd /home/pi/Desktop/LightYourHearth-rpi/
+git pull
+sudo pip3 install -r requirements.txt
 cd /home/pi/Desktop/LightYourHearth-rpi/RpiServer
-python3 main.py
+sudo python3 main.py
