@@ -1,6 +1,6 @@
 # Project LightYourHearth-mobile
 The goal of this project is to connect a rpi with ledstrips with individually adressable leds.
-It will then be controllable with a bluetooth connection using a phone app.
+It will then be controllable with a bluetooth connection using a phone app. Enjoy :)
 
 # Motivation
 The motivation behind this project is too decorate our homes, bicyles and anywhere you can think of with awesome controllable led.
