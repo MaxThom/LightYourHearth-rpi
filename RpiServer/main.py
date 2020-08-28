@@ -21,7 +21,6 @@ def main():
     except Exception as e:         
         log_message(e)
         blue_comm.close()
-        main()
 
 def launch_bluetooth_server(args):
     global blue_comm
