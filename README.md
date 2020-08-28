@@ -15,7 +15,7 @@ The bluetooth server and ledstrip connection on the rpi are made with Python3. I
  - Raspberry pi zero w
  - WS2812B Led strip
  - Electric cables
- - 5 volt power supply
+ - 5 volt power supply with 10 amps
  - 2 small buttons
 
 ### Phone App
