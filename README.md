@@ -76,6 +76,7 @@ MIT
 - [x] RPI - Control the ledstrip using a python script
 - [x] RPI - Add a bluetooth server to communicate with a phone
 - [x] RPI - Configure Raspbian to autolaunch the script on bootup
+- [x] RPI - Auto update the bluetooth server from git
 - [ ] RPI - Remove bluetooth security when pairing a device
 - [x] APP - Create a phone app using Xamarin and learn the basics
 - [x] APP - Add bluetooth client connection
@@ -86,8 +87,6 @@ MIT
 - [ ] APP - Create playlist for animations
 - [ ] APP - Create sections on the ledstrip for animations to target those sections
 - [ ] RPI - Add more animations
-- [ ] RPI - Add different ledstrip type (SK6812)
-- [ ] RPI - Create a docker container for the server
-- [ ] RPI - Create a script to update the container on launch if connected to wifi or cable
+- [X] RPI - Add different ledstrip type (SK6812)
 
 
