@@ -29,7 +29,16 @@ The phone app used to connect and control the ledstrip is made with Xamarin. I u
 - User will be able to divide the strip in different section and target those sections individually with animations
 
 # How to use
-n/a
+#### **Commands for Systemd**
+ - sudo nano /lib/systemd/system/lightyourhearth.service 
+ - sudo chmod +x /lib/systemd/system/lightyourhearth.service
+ - sudo systemctl daemon-reload
+ - sudo systemctl enable lightyourhearth.service
+ - sudo systemctl status lightyourhearth.service
+
+#### **Command for Cronjobs**
+ - sudo crontab -e
+ - sudo crontab -l
 
 # Installation
  #### Rpi
@@ -42,15 +51,21 @@ n/a
     - A file will open and add the compatibility flag, ' -C', at the end of the 'ExecStart=' line. Add a new line after that to add the SP profile. The two lines should look like this:
         - ExecStart=/usr/lib/bluetooth/bluetoothd -C
         - ExecStartPost=/usr/bin/sdptool add SP
- 4. Download repo to Desktop and navigate to root folder
+ 4. Download repo to Desktop Folderand navigate to root folder. Make sure it is in this path */home/pi/Desktop/LightYourHearth-rpi* 
  5. Install requirements : sudo pip3 install -r requirements.txt
- 6. Add LightYourHearth script to boot.init or crontab
-    - For crontab, open terminal and type : sudo crontab -e
-    - Add this line to start server on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth-rpi/LightYourHearth.sh >/home/pi/Desktop/LightYourHearth-rpi/Logs/cronlogs 2>&1**
+ 6. Add LightYourHearth-Update script to crontab
+    - Open terminal and type : sudo crontab -e
+    - Add this line to start server update check on system boot : **@reboot sh /home/pi/Desktop/LightYourHearth-rpi/LightYourHearth-Update.sh >/home/pi/Desktop/LightYourHearth-rpi/Logs/cronlogs 2>&1**
     - Save, you can confirm using sudo crontab -l
+ 7. Add Systemd unit file to systemd deamon
+    - sudo cp lightyourhearth.service /lib/systemd/system/
+    - sudo chmod +x /lib/systemd/system/lightyourhearth.service
+    - sudo systemctl daemon-reload
+    - sudo systemctl enable lightyourhearth.service
+    - sudo systemctl status lightyourhearth.service
 
 # Credits
-Thanks to a
+n/a
 
 # Liscense
 MIT
