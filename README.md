@@ -50,7 +50,7 @@ n/a
     - Save, you can confirm using sudo crontab -l
 
 # Credits
-Thanks to
+Thanks to a
 
 # Liscense
 MIT
