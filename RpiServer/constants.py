@@ -100,7 +100,7 @@ SERVER_CAPABILITIES = {
                 "max_value": 1 
             },
             "blink_time": { 
-                "type": "double", 
+                "type": "int", 
                 "default_value": 5, 
                 "min_value": 0, 
                 "max_value": 100 
