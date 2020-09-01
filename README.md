@@ -29,6 +29,14 @@ The phone app used to connect and control the ledstrip is made with Xamarin. I u
 - User will be able to divide the strip in different section and target those sections individually with animations
 
 # How to use
+#### **Commands for Bluetooth**
+ - sudo bluetoothctl
+ - system-alias '*alias*'
+ - discoverable on
+ - pairable on
+ - agent on
+ - default-agent
+ - On Android, select the device with the *alias* name. Follow pairing instruction on rpi and phone.
 #### **Commands for Systemd**
  - sudo nano /lib/systemd/system/lightyourhearth.service 
  - sudo chmod +x /lib/systemd/system/lightyourhearth.service
