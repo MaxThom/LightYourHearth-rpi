@@ -7,7 +7,6 @@ def clear(pixels, must_show=True):
         pixels.setPixelColor(i, Color(0, 0, 0))
     if (must_show): pixels.show()
     
-
 # Define the wheel function to interpolate between different hues.
 def wheel(pos):
     if pos < 85:
@@ -20,8 +19,10 @@ def wheel(pos):
         return Color(0, pos * 3, 255 - pos * 3)
 
 # WRGB 
-def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255)):
-    clear(pixels)
+def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_clear=False):
+    if (should_clear):
+        print("TEST")
+        clear(pixels)
     for i in range(pixels.numPixels()):
         pixels.setPixelColor(i, Color(color[2], color[1], color[3],  color[0]))
         if (wait != 0.0):
@@ -33,7 +34,7 @@ def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255)):
 
 # Define rainbow cycle function to do a cycle of all hues.
 def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
-    clear(pixels)
+    clear(pixels)    
     for i in range(pixels.numPixels()):
         # tricky math! we use each pixel as a fraction of the full 96-color wheel
         # (thats the i / strip.numPixels() part)
@@ -65,18 +66,19 @@ def rainbow_cycle(pixels, isCancelled, wait=0.005, loop=0, loop_forever=True):
             if (isCancelled()):
                 return
  
-def rainbow_colors(pixels, isCancelled, wait=0.05):
+def rainbow_colors(pixels, isCancelled, wait=0.05, loop_forever=True):
     clear(pixels)
-    for j in range(256): # one cycle of all 256 colors in the wheel
-        for i in range(pixels.numPixels()):
-            pixels.setPixelColor(i, wheel(((256 // pixels.numPixels() + j)) % 256) )
-        if (isCancelled()):
-            return
-        pixels.show()
-        if wait > 0:
-            time.sleep(wait)
-        if (isCancelled()):
+    while (loop_forever):
+        for j in range(256): # one cycle of all 256 colors in the wheel
+            for i in range(pixels.numPixels()):
+                pixels.setPixelColor(i, wheel(((256 // pixels.numPixels() + j)) % 256) )
+            if (isCancelled()):
                 return
+            pixels.show()
+            if wait > 0:
+                time.sleep(wait)
+            if (isCancelled()):
+                    return
  
 def brightness_decrease(pixels, isCancelled, wait=0.01, step=1):
     for j in range(int(256 // step)):

@@ -22,8 +22,9 @@ class Ledstrip:
 
     def pixel_rainbow_colors(self, args):
         wait, isFloat = Util.floatTryParse(args["wait"])
-        if (isFloat):
-            self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, wait))
+        loop_forever, isBool = Util.boolTryParse(args["loop_forever"])
+        if (isFloat and isBool):
+            self.__execute_task(LedUtil.rainbow_colors, (self.pixels, lambda: self.cancelTask, wait, loop_forever))
 
     def pixel_rainbow_cycle(self, args):
         loop_forever, isBool = Util.boolTryParse(args["loop_forever"])
@@ -58,8 +59,9 @@ class Ledstrip:
     def pixel_color_wipe(self, args):
         color, isColor = Util.colorTryParse(args["color"])
         wait, isFloat = Util.floatTryParse(args["wait"])
-        if (isColor and isFloat):
-            self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, wait, color))        
+        should_clear, isBool = Util.boolTryParse(args["should_clear"])
+        if (isColor and isFloat and isBool):
+            self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, wait, color, should_clear))        
 
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])
@@ -69,19 +71,22 @@ class Ledstrip:
             self.pixels.show()
 
     def set_settings(self, args):
-        self.__cancel_task()
-        self.led_type = args["led_type"]
-        self.led_count = int(args["led_pixel_count"])
-        ledType = constants.LED_STRIP
-        if (self.led_type == constants.LED_STRIP_SK6812):
-            ledType = ws.SK6812_STRIP_RGBW
-        elif (self.led_type == constants.LED_STRIP_WS2811):
-            ledType = ws.WS2811_STRIP_RGB
-        elif (self.led_type == constants.LED_STRIP_WS2812B):
-            ledType = ws.WS2811_STRIP_RGB
+        self.__cancel_task()        
+        
+        led_pixel_count, isInt = Util.intTryParse(args["led_pixel_count"])
+        if (isInt):
+            self.led_count = led_pixel_count
+            self.led_type = args["led_type"]
+            ledType = constants.LED_STRIP
+            if (self.led_type == constants.LED_STRIP_SK6812):
+                ledType = ws.SK6812_STRIP_RGBW
+            elif (self.led_type == constants.LED_STRIP_WS2811):
+                ledType = ws.WS2811_STRIP_RGB
+            elif (self.led_type == constants.LED_STRIP_WS2812B):
+                ledType = ws.WS2811_STRIP_RGB
 
-        self.pixels = PixelStrip(self.led_count, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, self.brightness, constants.LED_CHANNEL, ledType)
-        self.pixels.begin()
+            self.pixels = PixelStrip(self.led_count, constants.LED_PIN, constants.LED_FREQ_HZ, constants.LED_DMA, constants.LED_INVERT, self.brightness, constants.LED_CHANNEL, ledType)
+            self.pixels.begin()
 
     def pixel_off(self, args):
         self.__cancel_task()

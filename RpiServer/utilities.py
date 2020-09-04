@@ -14,7 +14,12 @@ def floatTryParse(value):
 
 def boolTryParse(value):
     try:
-        return bool(value), True
+        if (value == 'True'):
+            return True, True
+        elif (value == 'False'):
+            return False, True
+        else:
+            raise ValueError
     except ValueError:
         return value, False
 

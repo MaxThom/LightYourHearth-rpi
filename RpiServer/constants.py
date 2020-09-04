@@ -42,6 +42,10 @@ SERVER_CAPABILITIES = {
             "color": { 
                 "type": "color", 
                 "default_value": "#00000000"
+            },
+            "should_clear": {
+                "type": "boolean", 
+                "default_value": "False",
             }
         },
         LED_RAINBOW_COLOR: {
@@ -50,7 +54,11 @@ SERVER_CAPABILITIES = {
                 "default_value": 0.05, 
                 "min_value": 0, 
                 "max_value": 1 
-            } 
+            },
+            "loop_forever": {
+                "type": "boolean", 
+                "default_value": "True",
+            }
         },
         LED_RAINBOW_CYCLE: { 
             "wait": { 
