@@ -18,19 +18,79 @@ def wheel(pos):
         pos -= 170
         return Color(0, pos * 3, 255 - pos * 3)
 
+def wheelRGB(pos):
+    """Generate rainbow colors across 0-255 positions."""
+    if pos < 85:
+        return (pos * 3, 255 - pos * 3, 0)
+    elif pos < 170:
+        pos -= 85
+        return (255 - pos * 3, 0, pos * 3)
+    else:
+        pos -= 170
+        return (0, pos * 3, 255 - pos * 3)        
+
 # WRGB 
 def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_clear=False):
     if (should_clear):
-        print("TEST")
         clear(pixels)
     for i in range(pixels.numPixels()):
-        pixels.setPixelColor(i, Color(color[2], color[1], color[3],  color[0]))
+        pixels.setPixelColor(i, Color(color[1], color[2], color[3],  color[0]))
         if (wait != 0.0):
             if (isCancelled()):
                 break
             time.sleep(wait)
             pixels.show()
     pixels.show()
+
+def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=1, loop_forever=True):
+    step = pixels.numPixels() * fade_step
+    step_w = color[0] / step
+    step_r = color[1] / step
+    step_g = color[2] / step
+    step_b = color[3] / step
+    while (True):
+        for i in range(pixels.numPixels()):
+            for j in range(i):
+                if (j < i-1):                
+                    w = int(max(0, color[0] - (i-j) * step_w))
+                    r = int(max(0, color[1] - (i-j) * step_r))
+                    g = int(max(0, color[2] - (i-j) * step_g))
+                    b = int(max(0, color[3] - (i-j) * step_b))
+                    pixels.setPixelColor(j, Color(r, g, b, w))
+                else:
+                    pixels.setPixelColor(j, Color(color[1], color[2], color[3],  color[0]))
+            pixels.show()
+            if (isCancelled()):
+                return
+            time.sleep(wait)
+            if (isCancelled()):
+                return
+        if (not loop_forever):
+            return
+
+def color_wipe_rainbow(pixels, isCancelled, wait=0.01, fade_step=1, color_step=30):
+    step = pixels.numPixels() * fade_step
+    while (True):
+        for k in range(256):
+            cycle_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 
+            step_r = cycle_color[0] / step
+            step_g = cycle_color[1] / step
+            step_b = cycle_color[2] / step
+            for i in range(pixels.numPixels()):
+                for j in range(i):
+                    if (j < i-1):
+                        r = int(max(0, cycle_color[0] - (i-j) * step_r))
+                        g = int(max(0, cycle_color[1] - (i-j) * step_g))
+                        b = int(max(0, cycle_color[2] - (i-j) * step_b))
+                        pixels.setPixelColor(j, Color(r, g, b))
+                    else:
+                        pixels.setPixelColor(j, Color(cycle_color[0], cycle_color[1], cycle_color[2]))
+                pixels.show()
+                if (isCancelled()):
+                    return
+                time.sleep(wait)
+                if (isCancelled()):
+                    return
 
 # Define rainbow cycle function to do a cycle of all hues.
 def rainbow_cycle_successive(pixels, isCancelled, wait=0.1):
@@ -104,7 +164,7 @@ def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
         for j in range(2):
             for k in range(pixels.numPixels()):
                 # LedStrip is bgr and not rgb  
-                pixels.setPixelColor(k, Color(color[2], color[1], color[3],  color[0]))
+                pixels.setPixelColor(k, Color(color[1], color[2], color[3],  color[0]))
             if (isCancelled()):
                 return
             pixels.show()
@@ -126,9 +186,9 @@ def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
             clear(pixels, False)
             # first set all pixels at the begin
             for k in range(i):
-                pixels.setPixelColor(k, Color(color[2], color[1], color[3],  color[0]))
+                pixels.setPixelColor(k, Color(color[1], color[2], color[3],  color[0]))
             # set then the pixel at position j
-            pixels.setPixelColor(j, Color(color[2], color[1], color[3],  color[0]))            
+            pixels.setPixelColor(j, Color(color[1], color[2], color[3],  color[0]))            
             if (isCancelled()):
                 return
             pixels.show()

@@ -28,6 +28,7 @@ def colorTryParse(value):
         tempColor = ImageColor.getcolor(value, "RGBA")
         #ARGB
         color = (255 - tempColor[0], tempColor[1], tempColor[2], tempColor[3])
+        print(color)
         return color, True
     except Exception:
         return value, False            

@@ -61,7 +61,22 @@ class Ledstrip:
         wait, isFloat = Util.floatTryParse(args["wait"])
         should_clear, isBool = Util.boolTryParse(args["should_clear"])
         if (isColor and isFloat and isBool):
-            self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, wait, color, should_clear))        
+            self.__execute_task(LedUtil.color_wipe, (self.pixels, lambda: self.cancelTask, wait, color, should_clear))  
+
+    def pixel_color_wipe_cycle(self, args):
+        color, isColor = Util.colorTryParse(args["color"])
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        fade_step, isInt = Util.intTryParse(args["fade_step"])
+        loop_forever, isBool = Util.boolTryParse(args["loop_forever"])
+        if (isColor and isFloat and isInt and isBool):
+            self.__execute_task(LedUtil.color_wipe_cycle, (self.pixels, lambda: self.cancelTask, wait, color, fade_step, loop_forever)) 
+
+    def pixel_color_wipe_rainbow(self, args):
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        fade_step, isInt = Util.intTryParse(args["fade_step"])
+        color_step, isInt2 = Util.intTryParse(args["color_step"])
+        if (isFloat and isInt and isInt2):
+            self.__execute_task(LedUtil.color_wipe_rainbow, (self.pixels, lambda: self.cancelTask, wait, fade_step, color_step))            
 
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])
@@ -79,7 +94,7 @@ class Ledstrip:
             self.led_type = args["led_type"]
             ledType = constants.LED_STRIP
             if (self.led_type == constants.LED_STRIP_SK6812):
-                ledType = ws.SK6812_STRIP_RGBW
+                ledType = ws.SK6812W_STRIP
             elif (self.led_type == constants.LED_STRIP_WS2811):
                 ledType = ws.WS2811_STRIP_RGB
             elif (self.led_type == constants.LED_STRIP_WS2812B):

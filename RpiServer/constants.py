@@ -9,6 +9,8 @@ LED_BRIGHTNESS_DECREASE = "Led_Brightness_Decrease"
 LED_BLINK_COLOR = "Led_Blink_Color"
 LED_APPEAR_FROM_BACK = "Led_Appear_From_Back"
 LED_COLOR_WIPE = "Led_Color_Wipe"
+LED_COLOR_WIPE_CYCLE = "Led_Color_Wipe_Cycle"
+LED_COLOR_WIPE_RAINBOW = "Led_Color_Wipe_Rainbow"
 LED_SET_BRIGHTNESS = "Led_Set_Brightness"
 
 LED_SETTINGS = "Led_Settings"
@@ -27,7 +29,7 @@ LED_DMA = 10           # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 127   # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False     # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL = 0
-LED_STRIP = ws.SK6812_STRIP_RGBW
+LED_STRIP = ws.SK6812W_STRIP
 
 
 SERVER_CAPABILITIES = {
@@ -48,6 +50,48 @@ SERVER_CAPABILITIES = {
                 "default_value": "False",
             }
         },
+        LED_COLOR_WIPE_CYCLE: { 
+            "wait": { 
+                "type": "double", 
+                "default_value": 0.01, 
+                "min_value": 0, 
+                "max_value": 1 
+            },
+            "color": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            },
+            "fade_step": {
+                "type": "int", 
+                "default_value": 1, 
+                "min_value": 1, 
+                "max_value": 10 
+            },
+            "loop_forever": {
+                "type": "boolean", 
+                "default_value": "True",
+            }
+        },
+        LED_COLOR_WIPE_RAINBOW: { 
+            "wait": { 
+                "type": "double", 
+                "default_value": 0.01, 
+                "min_value": 0, 
+                "max_value": 1 
+            },
+            "fade_step": {
+                "type": "int", 
+                "default_value": 1, 
+                "min_value": 1, 
+                "max_value": 10 
+            },
+            "color_step": {
+                "type": "int", 
+                "default_value": 30, 
+                "min_value": 1, 
+                "max_value": 80 
+            }
+        },
         LED_RAINBOW_COLOR: {
             "wait": { 
                 "type": "double", 
@@ -57,7 +101,7 @@ SERVER_CAPABILITIES = {
             },
             "loop_forever": {
                 "type": "boolean", 
-                "default_value": "True",
+                "default_value": "True"
             }
         },
         LED_RAINBOW_CYCLE: { 
@@ -75,7 +119,7 @@ SERVER_CAPABILITIES = {
             },
             "loop_forever": {
                 "type": "boolean", 
-                "default_value": "True",
+                "default_value": "True"
             } 
         },
         LED_RAINBOW_CYCLE_SUCCESSIVE: {

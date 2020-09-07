@@ -4,15 +4,15 @@ from rpi_ws281x import Color, PixelStrip, ws
 
 
 # LED strip configuration:
-LED_COUNT = 300         # Number of LED pixels.
+LED_COUNT = 144         # Number of LED pixels.
 LED_PIN = 18           # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ = 800000   # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 10           # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255   # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False     # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL = 0
-LED_STRIP = ws.SK6812_STRIP_RGBW
-# LED_STRIP = ws.SK6812W_STRIP
+#LED_STRIP = ws.SK6812_STRIP_BRGW
+LED_STRIP = ws.SK6812W_STRIP
 
 
 # Define functions which animate LEDs in various ways.
@@ -54,6 +54,17 @@ def wheel(pos):
         pos -= 170
         return Color(0, pos * 3, 255 - pos * 3)
 
+def wheelRGB(pos):
+    """Generate rainbow colors across 0-255 positions."""
+    if pos < 85:
+        return (pos * 3, 255 - pos * 3, 0)
+    elif pos < 170:
+        pos -= 85
+        return (255 - pos * 3, 0, pos * 3)
+    else:
+        pos -= 170
+        return (0, pos * 3, 255 - pos * 3)
+
 
 def rainbow(strip, wait_ms=20, iterations=1):
     """Draw rainbow that fades across all pixels at once."""
@@ -84,61 +95,71 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i + q, 0)
 
+def color_wipe_cycle(pixels, wait=0.01, color=(255,255,255, 255), fade_step=1):
+    count = pixels.numPixels()
+    step = count * fade_step
+    step_r = color[0] / step
+    step_g = color[1] / step
+    step_b = color[2] / step
+    print(step_r, step_g, step_b)
+    for i in range(pixels.numPixels()):
+        for j in range(i):
+            if (j < i-1):                
+                r = int(max(0, color[0] - (i-j) * step_r))
+                g = int(max(0, color[1] - (i-j) * step_g))
+                b = int(max(0, color[2] - (i-j) * step_b))
+                pixels.setPixelColor(j, Color(r, g, b))
+            else:
+                pixels.setPixelColor(j, Color(color[0],color[1], color[2], color[3]))
+        pixels.show()
+        time.sleep(wait)
+
+def color_wipe_rainbow(pixels, wait=0.01, fade_step=1, color_step=30):
+    count = pixels.numPixels()
+    step = count * fade_step
+    for k in range(256):
+        cycle_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 
+        step_r = cycle_color[0] / step
+        step_g = cycle_color[1] / step
+        step_b = cycle_color[2] / step
+        for i in range(pixels.numPixels()):
+            for j in range(i):
+                if (j < i-1):
+                    r = int(max(0, cycle_color[0] - (i-j) * step_r))
+                    g = int(max(0, cycle_color[1] - (i-j) * step_g))
+                    b = int(max(0, cycle_color[2] - (i-j) * step_b))
+                    pixels.setPixelColor(j, Color(r, g, b))
+                else:
+                    pixels.setPixelColor(j, Color(cycle_color[0], cycle_color[1], cycle_color[2]))
+            pixels.show()
+            time.sleep(wait)
 
 # Main program logic follows:
 if __name__ == '__main__':
-    # Create NeoPixel object with appropriate configuration.
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
-
-    colorStraight(strip, Color(255, 255 , 255, 255), 0)
-    time.sleep(3.0)
-
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
-
-    colorStraight(strip, Color(255, 255, 255, 0), 0)
-    time.sleep(3.0)
-
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 255, LED_CHANNEL, LED_STRIP)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
-
-    colorStraight(strip, Color(0, 0, 0, 255), 0)
-    time.sleep(3.0)
-
-    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 10, LED_CHANNEL, LED_STRIP)
-    # Intialize the library (must be called once before other functions).
-    strip.begin()
-
-    colorWipe(strip, Color(0, 255, 0, 0), 0)
-    time.sleep(3.0)
-
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
     # Intialize the library (must be called once before other functions).
     strip.begin()
-
-    colorWipe(strip, Color(0, 255, 0, 0), 0)
-
+    colorWipe(strip, Color(0, 0, 0), wait_ms=0)
     print('Press Ctrl-C to quit.')
     while True:
         # Color wipe animations.
-        colorWipe(strip, Color(255, 0, 0))  # Red wipe
-        colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-        colorWipe(strip, Color(0, 0, 255))  # Green wipe
-        colorWipe(strip, Color(0, 0, 0, 255))  # White wipe
-        colorWipe(strip, Color(255, 255, 255))  # Composite White wipe
-        colorWipe(strip, Color(255, 255, 255, 255))  # Composite White + White LED wipe
+        #colorWipe(strip, Color(255, 0, 0))  # Red wipe
+        #colorWipe(strip, Color(0, 255, 0))  # Blue wipe
+        #colorWipe(strip, Color(0, 0, 255))  # Green wipe
+        #colorWipe(strip, Color(0, 0, 0, 255))  # White wipe
+        #colorWipe(strip, Color(255, 255, 255))  # Composite White wipe
+        #colorWipe(strip, Color(255, 255, 255, 255))  # Composite White + White LED wipe
         # Theater chase animations.
-        theaterChase(strip, Color(127, 0, 0))  # Red theater chase
-        theaterChase(strip, Color(0, 127, 0))  # Green theater chase
-        theaterChase(strip, Color(0, 0, 127))  # Blue theater chase
-        theaterChase(strip, Color(0, 0, 0, 127))  # White theater chase
-        theaterChase(strip, Color(127, 127, 127, 0))  # Composite White theater chase
-        theaterChase(strip, Color(127, 127, 127, 127))  # Composite White + White theater chase
+        #theaterChase(strip, Color(127, 0, 0))  # Red theater chase
+        #theaterChase(strip, Color(0, 127, 0))  # Green theater chase
+        #theaterChase(strip, Color(0, 0, 127))  # Blue theater chase
+        #theaterChase(strip, Color(0, 0, 0, 127))  # White theater chase
+        #theaterChase(strip, Color(127, 127, 127, 0))  # Composite White theater chase
+        #theaterChase(strip, Color(127, 127, 127, 127))  # Composite White + White theater chase
         # Rainbow animations.
-        rainbow(strip)
-        rainbowCycle(strip)
-        theaterChaseRainbow(strip) 
+        #rainbow(strip)
+        #rainbowCycle(strip)
+        #theaterChaseRainbow(strip) 
+        
+        #color_wipe_cycle(strip, 0.01, (60,121,120,0), 1)
+        color_wipe_rainbow(strip, 0.01, 1, 30)
