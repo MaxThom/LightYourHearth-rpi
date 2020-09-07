@@ -55,7 +55,7 @@ SERVER_CAPABILITIES = {
                 "type": "double", 
                 "default_value": 0.01, 
                 "min_value": 0, 
-                "max_value": 1 
+                "max_value": 0.25 
             },
             "color": { 
                 "type": "color", 
@@ -63,9 +63,9 @@ SERVER_CAPABILITIES = {
             },
             "fade_step": {
                 "type": "int", 
-                "default_value": 1, 
+                "default_value": 50, 
                 "min_value": 1, 
-                "max_value": 10 
+                "max_value": 100 
             },
             "loop_forever": {
                 "type": "boolean", 
@@ -77,13 +77,13 @@ SERVER_CAPABILITIES = {
                 "type": "double", 
                 "default_value": 0.01, 
                 "min_value": 0, 
-                "max_value": 1 
+                "max_value": 0.25 
             },
             "fade_step": {
                 "type": "int", 
-                "default_value": 1, 
+                "default_value": 50, 
                 "min_value": 1, 
-                "max_value": 10 
+                "max_value": 100 
             },
             "color_step": {
                 "type": "int", 

@@ -42,8 +42,8 @@ def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_c
             pixels.show()
     pixels.show()
 
-def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=1, loop_forever=True):
-    step = pixels.numPixels() * fade_step
+def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=50, loop_forever=True):
+    step = pixels.numPixels() * max(abs(100 - fade_step), 1) / 50
     step_w = color[0] / step
     step_r = color[1] / step
     step_g = color[2] / step
@@ -68,8 +68,8 @@ def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), f
         if (not loop_forever):
             return
 
-def color_wipe_rainbow(pixels, isCancelled, wait=0.01, fade_step=1, color_step=30):
-    step = pixels.numPixels() * fade_step
+def color_wipe_rainbow(pixels, isCancelled, wait=0.01, fade_step=50, color_step=30):
+    step = pixels.numPixels() * max(abs(100 - fade_step), 1) / 50
     while (True):
         for k in range(256):
             cycle_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 

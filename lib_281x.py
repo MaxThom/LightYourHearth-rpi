@@ -95,9 +95,10 @@ def theaterChaseRainbow(strip, wait_ms=50):
             for i in range(0, strip.numPixels(), 3):
                 strip.setPixelColor(i + q, 0)
 
-def color_wipe_cycle(pixels, wait=0.01, color=(255,255,255, 255), fade_step=1):
+def color_wipe_cycle(pixels, wait=0.01, color=(255,255,255, 255), fade_step=50):
     count = pixels.numPixels()
-    step = count * fade_step
+    step = count * max(abs(100 - fade_step), 1) / 50
+    print(step)
     step_r = color[0] / step
     step_g = color[1] / step
     step_b = color[2] / step
@@ -116,7 +117,7 @@ def color_wipe_cycle(pixels, wait=0.01, color=(255,255,255, 255), fade_step=1):
 
 def color_wipe_rainbow(pixels, wait=0.01, fade_step=1, color_step=30):
     count = pixels.numPixels()
-    step = count * fade_step
+    step = count / fade_step
     for k in range(256):
         cycle_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 
         step_r = cycle_color[0] / step
@@ -161,5 +162,5 @@ if __name__ == '__main__':
         #rainbowCycle(strip)
         #theaterChaseRainbow(strip) 
         
-        #color_wipe_cycle(strip, 0.01, (60,121,120,0), 1)
-        color_wipe_rainbow(strip, 0.01, 1, 30)
+        color_wipe_cycle(strip, 0.01, (60,121,120,0), 50)
+        #color_wipe_rainbow(strip, 0.01, 1, 30)
