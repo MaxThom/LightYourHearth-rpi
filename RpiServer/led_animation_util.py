@@ -50,7 +50,7 @@ def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), f
     step_b = color[3] / step
     while (True):
         for i in range(pixels.numPixels()):
-            for j in range(i):
+            for j in range(i+1):
                 if (j < i-1):                
                     w = int(max(0, color[0] - (i-j) * step_w))
                     r = int(max(0, color[1] - (i-j) * step_r))
@@ -77,7 +77,7 @@ def color_wipe_rainbow(pixels, isCancelled, wait=0.01, fade_step=50, color_step=
             step_g = cycle_color[1] / step
             step_b = cycle_color[2] / step
             for i in range(pixels.numPixels()):
-                for j in range(i):
+                for j in range(i+1):
                     if (j < i-1):
                         r = int(max(0, cycle_color[0] - (i-j) * step_r))
                         g = int(max(0, cycle_color[1] - (i-j) * step_g))
