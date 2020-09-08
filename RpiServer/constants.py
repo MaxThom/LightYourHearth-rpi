@@ -12,6 +12,10 @@ LED_COLOR_WIPE = "Led_Color_Wipe"
 LED_COLOR_WIPE_CYCLE = "Led_Color_Wipe_Cycle"
 LED_COLOR_WIPE_RAINBOW = "Led_Color_Wipe_Rainbow"
 LED_SET_BRIGHTNESS = "Led_Set_Brightness"
+LED_THEATER_CHASE = "Led_Theater_Chase"
+LED_BREATHING = "Led_Breathing"
+LED_BREATHING_LERP = "Led_Breathing_Lerp"
+LED_BREATHING_RAINBOW = "Led_Breathing_Rainbow"
 
 LED_SETTINGS = "Led_Settings"
 LED_ANIMATION_CAPABILITIES = "Led_Animation_Capabilities"
@@ -167,5 +171,64 @@ SERVER_CAPABILITIES = {
                 "type": "color", 
                 "default_value": "#00000000"
             }
-        }
+        },
+        LED_THEATER_CHASE: { 
+            "wait": { 
+                "type": "double", 
+                "default_value": 0.075, 
+                "min_value": 0.001, 
+                "max_value": 0.3 
+            },
+            "color": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            },
+            "is_rainbow": {
+                "type": "boolean", 
+                "default_value": "True",
+            }
+        },
+        LED_BREATHING: { 
+            "move_factor": { 
+                "type": "double", 
+                "default_value": 0.5, 
+                "min_value": 0.001, 
+                "max_value": 1 
+            },
+            "color": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            }
+        },
+        LED_BREATHING_LERP: { 
+            "move_factor": { 
+                "type": "double", 
+                "default_value": 0.25, 
+                "min_value": 0.001, 
+                "max_value": 1 
+            },
+            "color_to": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            },
+            "color_from": { 
+                "type": "color", 
+                "default_value": "#FF00FF00"
+            }
+        },
+        LED_BREATHING_RAINBOW: { 
+            "move_factor": { 
+                "type": "double", 
+                "default_value": 0.25, 
+                "min_value": 0.001, 
+                "max_value": 1 
+            },
+            "color_step": {
+                "type": "int", 
+                "default_value": 30, 
+                "min_value": 1, 
+                "max_value": 80 
+            }
+        },
+
     }

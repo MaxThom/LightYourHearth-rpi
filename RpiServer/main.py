@@ -75,9 +75,13 @@ commandAction = {
         constants.LED_COLOR_WIPE: pixels.pixel_color_wipe,
         constants.LED_COLOR_WIPE_CYCLE: pixels.pixel_color_wipe_cycle,
         constants.LED_COLOR_WIPE_RAINBOW: pixels.pixel_color_wipe_rainbow,
+        constants.LED_THEATER_CHASE: pixels.pixel_theater_chase,
+        constants.LED_BREATHING: pixels.pixel_breathing,
+        constants.LED_BREATHING_LERP: pixels.pixel_breathing_lerp,
+        constants.LED_BREATHING_RAINBOW: pixels.pixel_breathing_rainbow,
         constants.LED_SET_BRIGHTNESS: pixels.set_brightness,
         constants.LED_SETTINGS: pixels.set_settings,
-        constants.LED_ANIMATION_CAPABILITIES: get_server_capabilities
+        constants.LED_ANIMATION_CAPABILITIES: get_server_capabilities        
     }
 
 

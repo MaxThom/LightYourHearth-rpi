@@ -71,12 +71,38 @@ class Ledstrip:
         if (isColor and isFloat and isInt and isBool):
             self.__execute_task(LedUtil.color_wipe_cycle, (self.pixels, lambda: self.cancelTask, wait, color, fade_step, loop_forever)) 
 
+    def pixel_theater_chase(self, args):
+        color, isColor = Util.colorTryParse(args["color"])
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        is_rainbow, isBool = Util.boolTryParse(args["is_rainbow"])
+        if (isColor and isFloat and isBool):
+            self.__execute_task(LedUtil.theaterChase, (self.pixels, lambda: self.cancelTask, color, wait, is_rainbow))     
+
     def pixel_color_wipe_rainbow(self, args):
         wait, isFloat = Util.floatTryParse(args["wait"])
         fade_step, isInt = Util.intTryParse(args["fade_step"])
         color_step, isInt2 = Util.intTryParse(args["color_step"])
         if (isFloat and isInt and isInt2):
             self.__execute_task(LedUtil.color_wipe_rainbow, (self.pixels, lambda: self.cancelTask, wait, fade_step, color_step))            
+
+    def pixel_breathing(self, args):
+        color, isColor = Util.colorTryParse(args["color"])
+        move_factor, isFloat = Util.floatTryParse(args["move_factor"])
+        if (isFloat and isColor):
+            self.__execute_task(LedUtil.breathing, (self.pixels, lambda: self.cancelTask, color, move_factor))
+
+    def pixel_breathing_lerp(self, args):
+        color_to, isColor1 = Util.colorTryParse(args["color_to"])
+        color_from, isColor2 = Util.colorTryParse(args["color_from"])
+        move_factor, isFloat = Util.floatTryParse(args["move_factor"])
+        if (isColor1 and isColor2 and isFloat):
+            self.__execute_task(LedUtil.breathing_lerp, (self.pixels, lambda: self.cancelTask, color_from, color_to, move_factor))  
+
+    def pixel_breathing_rainbow(self, args):
+            move_factor, isFloat = Util.floatTryParse(args["move_factor"])
+            color_step, isInt = Util.intTryParse(args["color_step"])
+            if (isInt and isFloat):
+                self.__execute_task(LedUtil.breathing_rainbow, (self.pixels, lambda: self.cancelTask, color_step, move_factor))  
 
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])

@@ -1,5 +1,5 @@
 import time
-import time
+import math
 from rpi_ws281x import Color, PixelStrip, ws
  
 def clear(pixels, must_show=True):
@@ -28,6 +28,14 @@ def wheelRGB(pos):
     else:
         pos -= 170
         return (0, pos * 3, 255 - pos * 3)        
+
+def get_mouvement_factor(x):
+    period = 100 # The higher the slower
+    cycles = x / period
+    tau = math.pi * 2
+    raw_sin_wave = math.sin(cycles*tau)
+    mouvement_factor = raw_sin_wave / 2 + 0.5
+    return mouvement_factor
 
 # WRGB 
 def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_clear=False):
@@ -195,3 +203,114 @@ def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
             time.sleep(0.02)
             if (isCancelled()):
                 return
+
+def theaterChase(pixels, isCancelled, color=(255, 0, 0, 0), wait=0.01, is_rainbow=True):
+    if (is_rainbow):
+        theaterChaseRainbow(pixels, isCancelled, wait)
+        return
+
+    while (True):
+        for q in range(3):
+            if (isCancelled()):
+                return
+            for i in range(0, pixels.numPixels(), 3):
+                pixels.setPixelColor(i + q, Color(color[1], color[2], color[3],  color[0]))
+            pixels.show()
+            if (isCancelled()):
+                return
+            time.sleep(wait)
+            if (isCancelled()):
+                return
+            for i in range(0, pixels.numPixels(), 3):
+                pixels.setPixelColor(i + q, 0)
+
+def theaterChaseRainbow(pixels, isCancelled, wait=0.01):
+    for j in range(256):
+        for q in range(3):
+            if (isCancelled()):
+                return
+            for i in range(0, pixels.numPixels(), 3):
+                pixels.setPixelColor(i + q, wheel((i + j) % 255))
+            pixels.show()
+            if (isCancelled()):
+                return
+            time.sleep(wait)
+            if (isCancelled()):
+                return
+            for i in range(0, pixels.numPixels(), 3):
+                pixels.setPixelColor(i + q, 0)
+
+def breathing(pixels, isCancelled, color=(255,0,0,0), move_factor=0.5):    
+    mov_max = 100
+    mov_factor = move_factor
+    while (True):
+        mov = 0
+        while (mov < mov_max):
+            if (isCancelled()):
+                return
+            time.sleep(0.01)
+            if (isCancelled()):
+                return
+            factor = get_mouvement_factor(mov)
+            r = int(color[1]*factor)
+            g = int(color[2]*factor)
+            b = int(color[3]*factor)
+            w = int(color[0]*factor)            
+            for i in range(pixels.numPixels()):
+                pixels.setPixelColor(i, Color(r, g, b, w))
+            pixels.show()
+            mov += mov_factor
+            if (isCancelled()):
+                return
+
+def breathing_lerp(pixels, isCancelled, color_from=(255,0,0,0), color_to=(0,255,0,0), move_factor=0.25):    
+    mov_max = 100
+    mov_factor = move_factor
+    while (True):
+        mov = 0
+        while (mov < mov_max):
+            if (isCancelled()):
+                return
+            time.sleep(0.01)
+            if (isCancelled()):
+                return
+            factor = get_mouvement_factor(mov)
+            r = int((color_to[1]-color_from[1])*factor) + color_from[1]
+            g = int((color_to[2]-color_from[2])*factor) + color_from[2]
+            b = int((color_to[3]-color_from[3])*factor) + color_from[3]
+            w = int((color_to[0]-color_from[0])*factor) + color_from[0]
+            for i in range(pixels.numPixels()):
+                pixels.setPixelColor(i, Color(r, g, b, w))
+            pixels.show()
+            mov += mov_factor
+            if (isCancelled()):
+                return
+    
+def breathing_rainbow(pixels, isCancelled, color_step=30, move_factor=0.25):    
+    mov_max = 125
+    mov_factor = move_factor
+    while (True):
+        last_color = wheelRGB(((256 // pixels.numPixels() + 0*color_step)) % 256) 
+        for k in range(1, 256):
+            if (isCancelled()):
+                return
+            mov = -25
+            next_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 
+            while (mov < mov_max):
+                if (isCancelled()):
+                    return
+                time.sleep(0.01)
+                if (isCancelled()):
+                    return
+                factor = get_mouvement_factor(mov)
+                r = int((next_color[0]-last_color[0])*factor) + last_color[0]
+                g = int((next_color[1]-last_color[1])*factor) + last_color[1]
+                b = int((next_color[2]-last_color[2])*factor) + last_color[2]
+                for i in range(pixels.numPixels()):
+                    pixels.setPixelColor(i, Color(r, g, b))
+                pixels.show()
+                mov += mov_factor
+                if (isCancelled()):
+                    return
+            temp = pixels.getPixelColorRGB(0)
+            last_color = (temp.r, temp.g, temp.b)

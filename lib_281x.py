@@ -1,4 +1,5 @@
 import time
+import math
 
 from rpi_ws281x import Color, PixelStrip, ws
 
@@ -135,6 +136,81 @@ def color_wipe_rainbow(pixels, wait=0.01, fade_step=1, color_step=30):
             pixels.show()
             time.sleep(wait)
 
+def color_breathing(pixels, color=(255,0,0,0)):    
+    mov_max = 100
+    mov_factor = 0.5
+    #while (True):
+    mov = 0
+    while (mov < mov_max):
+        time.sleep(0.01)
+        print(mov)
+        factor = get_mouvement_factor(mov)
+        r = int(color[0]*factor)
+        g = int(color[1]*factor)
+        b = int(color[2]*factor)
+        w = int(color[3]*factor)
+        print("color ", r, g, b, w)
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i, Color(r, g, b, w))
+        strip.show()
+        mov += mov_factor
+
+def color_breathing_lerp(pixels, color_from=(255,0,0,0), color_to=(0,255,0,0)):    
+    mov_max = 100
+    mov_factor = 0.25
+    while (True):
+        mov = 0
+        while (mov < mov_max):
+            time.sleep(0.01)
+            print(mov)
+            factor = get_mouvement_factor(mov)
+            r = int((color_to[0]-color_from[0])*factor) + color_from[0]
+            g = int((color_to[1]-color_from[1])*factor) + color_from[1]
+            b = int((color_to[2]-color_from[2])*factor) + color_from[2]
+            w = int((color_to[3]-color_from[3])*factor) + color_from[3]
+            print("color ", r, g, b, w)
+            for i in range(strip.numPixels()):
+                strip.setPixelColor(i, Color(r, g, b, w))
+            strip.show()
+            mov += mov_factor
+    
+def color_breathing_lerp_rainbow(pixels, color_step=70):    
+    mov_max = 125
+    mov_factor = 0.2
+    while (True):
+        last_color = wheelRGB(((256 // pixels.numPixels() + 0*color_step)) % 256) 
+        for k in range(1, 256):
+            mov = -25
+            next_color = wheelRGB(((256 // pixels.numPixels() + k*color_step)) % 256) 
+            while (mov < mov_max):
+                time.sleep(0.01)
+                print(mov)
+                factor = get_mouvement_factor(mov)
+                r = int((next_color[0]-last_color[0])*factor) + last_color[0]
+                g = int((next_color[1]-last_color[1])*factor) + last_color[1]
+                b = int((next_color[2]-last_color[2])*factor) + last_color[2]
+                print("color ", r, g, b)
+                for i in range(strip.numPixels()):
+                    strip.setPixelColor(i, Color(r, g, b))
+                strip.show()
+                mov += mov_factor
+            temp = strip.getPixelColorRGB(0)
+            last_color = (temp.r, temp.g, temp.b)
+            last_color = next_color
+
+def get_mouvement_factor(x):
+    print("----------------")
+    period = 100 # The higher the slower
+    cycles = x / period
+    print("cycles ", cycles)
+    tau = math.pi * 2
+    print("tau ", tau)
+    raw_sin_wave = math.sin(cycles*tau)
+    print("raw_sin_wave ", raw_sin_wave)
+    mouvement_factor = raw_sin_wave / 2 + 0.5
+    print("mouvement_factor ", mouvement_factor)
+    return mouvement_factor
+
 # Main program logic follows:
 if __name__ == '__main__':
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
@@ -162,5 +238,8 @@ if __name__ == '__main__':
         #rainbowCycle(strip)
         #theaterChaseRainbow(strip) 
         
-        color_wipe_cycle(strip, 0.01, (60,121,120,0), 50)
+        #color_wipe_cycle(strip, 0.01, (60,121,120,0), 50)
         #color_wipe_rainbow(strip, 0.01, 1, 30)
+        #color_breathing(strip)
+        #color_breathing_lerp(strip)
+        color_breathing_lerp_rainbow(strip)
