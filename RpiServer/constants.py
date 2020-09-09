@@ -272,15 +272,15 @@ SERVER_CAPABILITIES = {
             },
             "fade_step": {
                 "type": "int",
-                "default_value": 5, 
+                "default_value": 20, 
                 "min_value": 1, 
-                "max_value": 20
+                "max_value": 50
             },
             "firework_fade": {
                 "type": "int",
-                "default_value": 40, 
+                "default_value": 70, 
                 "min_value": 1, 
-                "max_value": 80 
+                "max_value": 100 
             }
         }
     }

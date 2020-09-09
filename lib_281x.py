@@ -230,16 +230,16 @@ def appear_from_back(pixels, color=(0, 255, 0, 255), size=3):
             pixels.show()
             time.sleep(0.02)
 
-def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_fireworks=5, chance_of_explosion=5, fade_step=5, firework_fade=40):
+def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_fireworks=5, chance_of_explosion=5, fade_step=20, firework_fade=40):
     color = (color[1], color[2], color[3], color[0])
     if (size % 2 == 0):
         size += 1
     while (True):
         for i in range(pixels.numPixels()):
             c = pixels.getPixelColorRGB(i)
-            r = int(max(0, c.r - fade_step))
-            g = int(max(0, c.g - fade_step))
-            b = int(max(0, c.b - fade_step))
+            r = int(max(0, c.r - (c.r / 255 * fade_step)))
+            g = int(max(0, c.g - (c.g / 255 * fade_step)))
+            b = int(max(0, c.b - (c.b / 255 * fade_step)))
             pixels.setPixelColor(i, Color(r, g, b))
         for i in range(number_of_fireworks):
             chance = randint(0, 100)            
@@ -250,10 +250,10 @@ def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_f
                 pixels.setPixelColor(where, Color(color[1], color[2], color[3],  color[0]))
                 for j in range(int(size/2)+1):
                     step = firework_fade * j
-                    r = int(max(0, color[0] - step))
-                    g = int(max(0, color[1] - step))
-                    b = int(max(0, color[2] - step))
-                    w = int(max(0, color[3] - step))
+                    r = int(max(0, color[0] - (color[0] / 255 * step)))
+                    g = int(max(0, color[1] - (color[1] / 255 * step)))
+                    b = int(max(0, color[2] - (color[2] / 255 * step)))
+                    w = int(max(0, color[3] - (color[3] / 255 * step)))
                     pixels.setPixelColor(where-j, Color(r, g, b, w))
                     pixels.setPixelColor(where+j, Color(r, g, b, w))
         pixels.show()
