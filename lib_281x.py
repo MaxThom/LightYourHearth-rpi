@@ -1,5 +1,6 @@
 import time
 import math
+from random import *
 
 from rpi_ws281x import Color, PixelStrip, ws
 
@@ -62,13 +63,13 @@ def wheel(pos):
 def wheelRGB(pos):
     """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
-        return (pos * 3, 255 - pos * 3, 0)
+        return (pos * 3, 255 - pos * 3, 0, 0)
     elif pos < 170:
         pos -= 85
-        return (255 - pos * 3, 0, pos * 3)
+        return (255 - pos * 3, 0, pos * 3, 0)
     else:
         pos -= 170
-        return (0, pos * 3, 255 - pos * 3)
+        return (0, pos * 3, 255 - pos * 3, 0)
 
 
 def rainbow(strip, wait_ms=20, iterations=1):
@@ -229,6 +230,35 @@ def appear_from_back(pixels, color=(0, 255, 0, 255), size=3):
             pixels.show()
             time.sleep(0.02)
 
+def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_fireworks=5, chance_of_explosion=5, fade_step=5, firework_fade=40):
+    color = (color[1], color[2], color[3], color[0])
+    if (size % 2 == 0):
+        size += 1
+    while (True):
+        for i in range(pixels.numPixels()):
+            c = pixels.getPixelColorRGB(i)
+            r = int(max(0, c.r - fade_step))
+            g = int(max(0, c.g - fade_step))
+            b = int(max(0, c.b - fade_step))
+            pixels.setPixelColor(i, Color(r, g, b))
+        for i in range(number_of_fireworks):
+            chance = randint(0, 100)            
+            if (chance <= chance_of_explosion):
+                if (is_rainbow):
+                    color = wheelRGB(randint(1, 255))
+                where = randint(0, pixels.numPixels())
+                pixels.setPixelColor(where, Color(color[1], color[2], color[3],  color[0]))
+                for j in range(int(size/2)+1):
+                    step = firework_fade * j
+                    r = int(max(0, color[0] - step))
+                    g = int(max(0, color[1] - step))
+                    b = int(max(0, color[2] - step))
+                    w = int(max(0, color[3] - step))
+                    pixels.setPixelColor(where-j, Color(r, g, b, w))
+                    pixels.setPixelColor(where+j, Color(r, g, b, w))
+        pixels.show()
+        time.sleep(0.02)
+
 # Main program logic follows:
 if __name__ == '__main__':
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
@@ -261,6 +291,7 @@ if __name__ == '__main__':
         #color_breathing(strip)
         #color_breathing_lerp(strip)
         #color_breathing_lerp_rainbow(strip)
-        appear_from_back(strip, size=7)
+        #appear_from_back(strip, size=7)
+        fireworks(strip)
 
         

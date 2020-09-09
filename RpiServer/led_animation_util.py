@@ -1,7 +1,8 @@
 import time
 import math
 from rpi_ws281x import Color, PixelStrip, ws
- 
+from random import *
+
 def clear(pixels, must_show=True):
     for i in range(pixels.numPixels()):
         pixels.setPixelColor(i, Color(0, 0, 0))
@@ -21,13 +22,13 @@ def wheel(pos):
 def wheelRGB(pos):
     """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
-        return (pos * 3, 255 - pos * 3, 0)
+        return (pos * 3, 255 - pos * 3, 0, 0)
     elif pos < 170:
         pos -= 85
-        return (255 - pos * 3, 0, pos * 3)
+        return (255 - pos * 3, 0, pos * 3, 0)
     else:
         pos -= 170
-        return (0, pos * 3, 255 - pos * 3)        
+        return (0, pos * 3, 255 - pos * 3, 0)        
 
 def get_mouvement_factor(x):
     period = 100 # The higher the slower
@@ -319,3 +320,38 @@ def breathing_rainbow(pixels, isCancelled, color_step=30, move_factor=0.25):
                     return
             temp = pixels.getPixelColorRGB(0)
             last_color = (temp.r, temp.g, temp.b)
+
+def fireworks(pixels, isCancelled, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_fireworks=5, chance_of_explosion=5, fade_step=5, firework_fade=40):
+    color = (color[1], color[2], color[3], color[0])
+    if (size % 2 == 0):
+        size += 1
+    while (not isCancelled()):
+        for i in range(pixels.numPixels()):
+            c = pixels.getPixelColorRGB(i)
+            r = int(max(0, c.r - fade_step))
+            g = int(max(0, c.g - fade_step))
+            b = int(max(0, c.b - fade_step))
+            pixels.setPixelColor(i, Color(r, g, b))
+        for i in range(number_of_fireworks):
+            if (isCancelled()):
+                return
+            chance = randint(0, 100)            
+            if (chance <= chance_of_explosion):
+                if (is_rainbow):
+                    color = wheelRGB(randint(1, 255))
+                where = randint(0, pixels.numPixels())
+                pixels.setPixelColor(where, Color(color[1], color[2], color[3],  color[0]))
+                for j in range(int(size/2)+1):
+                    step = firework_fade * j
+                    r = int(max(0, color[0] - step))
+                    g = int(max(0, color[1] - step))
+                    b = int(max(0, color[2] - step))
+                    w = int(max(0, color[3] - step))
+                    pixels.setPixelColor(where-j, Color(r, g, b, w))
+                    pixels.setPixelColor(where+j, Color(r, g, b, w))
+        pixels.show()
+        if (isCancelled()):
+                return
+        time.sleep(0.02)
+        if (isCancelled()):
+                return

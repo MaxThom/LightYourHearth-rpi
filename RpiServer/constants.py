@@ -16,6 +16,7 @@ LED_THEATER_CHASE = "Led_Theater_Chase"
 LED_BREATHING = "Led_Breathing"
 LED_BREATHING_LERP = "Led_Breathing_Lerp"
 LED_BREATHING_RAINBOW = "Led_Breathing_Rainbow"
+LED_FIREWORKS = "Led_Fireworks"
 
 LED_SETTINGS = "Led_Settings"
 LED_ANIMATION_CAPABILITIES = "Led_Animation_Capabilities"
@@ -242,5 +243,44 @@ SERVER_CAPABILITIES = {
                 "max_value": 80 
             }
         },
-
+        LED_FIREWORKS: {
+            "color": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            },
+            "size": {
+                "type": "int",
+                "default_value": 7, 
+                "min_value": 3, 
+                "max_value": 21 
+            },
+            "is_rainbow": {
+                "type": "boolean", 
+                "default_value": "True",
+            },
+            "number_of_fireworks": {
+                "type": "int",
+                "default_value": 5, 
+                "min_value": 1, 
+                "max_value": 20 
+            },
+            "chance_of_explosion": {
+                "type": "int",
+                "default_value": 5, 
+                "min_value": 1, 
+                "max_value": 100 
+            },
+            "fade_step": {
+                "type": "int",
+                "default_value": 5, 
+                "min_value": 1, 
+                "max_value": 20
+            },
+            "firework_fade": {
+                "type": "int",
+                "default_value": 40, 
+                "min_value": 1, 
+                "max_value": 80 
+            }
+        }
     }

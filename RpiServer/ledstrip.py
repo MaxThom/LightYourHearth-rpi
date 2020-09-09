@@ -106,6 +106,18 @@ class Ledstrip:
             if (isInt and isFloat):
                 self.__execute_task(LedUtil.breathing_rainbow, (self.pixels, lambda: self.cancelTask, color_step, move_factor))  
 
+    def pixel_fireworks(self, args):
+        size, isInt = Util.intTryParse(args["size"])
+        color, isColor = Util.colorTryParse(args["color"])
+        is_rainbow, isBool = Util.boolTryParse(args["is_rainbow"])
+        number_of_fireworks, isInt1 = Util.intTryParse(args["number_of_fireworks"])
+        chance_of_explosion, isInt2 = Util.intTryParse(args["chance_of_explosion"])
+        fade_step, isInt3 = Util.intTryParse(args["fade_step"])
+        firework_fade, isInt4 = Util.intTryParse(args["firework_fade"])
+        if (isColor and isBool and isInt and isInt1 and isInt2 and isInt3 and isInt4):
+            self.__execute_task(LedUtil.fireworks, (self.pixels, lambda: self.cancelTask, size, color, is_rainbow, number_of_fireworks, chance_of_explosion, fade_step, firework_fade))     
+
+
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])
         if (isInt):
