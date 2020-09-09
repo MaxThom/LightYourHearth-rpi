@@ -15,6 +15,10 @@ LED_CHANNEL = 0
 #LED_STRIP = ws.SK6812_STRIP_BRGW
 LED_STRIP = ws.SK6812W_STRIP
 
+def clear(pixels, must_show=True):
+    for i in range(pixels.numPixels()):
+        pixels.setPixelColor(i, Color(0, 0, 0))
+    if (must_show): pixels.show()
 
 # Define functions which animate LEDs in various ways.
 def colorStraight(strip, color, wait_ms=50):
@@ -211,6 +215,20 @@ def get_mouvement_factor(x):
     print("mouvement_factor ", mouvement_factor)
     return mouvement_factor
 
+def appear_from_back(pixels, color=(0, 255, 0, 255), size=3):
+    clear(pixels)
+    for i in range(int(pixels.numPixels()/size)):
+        for j in reversed(range(i*size, pixels.numPixels()-size)):
+            clear(pixels, False)
+            # first set all pixels at the begin
+            for k in range(i*size):
+                pixels.setPixelColor(k, Color(color[1], color[2], color[3],  color[0]))
+            # set then the pixel at position j
+            for l in range(size):
+                pixels.setPixelColor(j+l, Color(color[1], color[2], color[3],  color[0]))
+            pixels.show()
+            time.sleep(0.02)
+
 # Main program logic follows:
 if __name__ == '__main__':
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
@@ -242,4 +260,7 @@ if __name__ == '__main__':
         #color_wipe_rainbow(strip, 0.01, 1, 30)
         #color_breathing(strip)
         #color_breathing_lerp(strip)
-        color_breathing_lerp_rainbow(strip)
+        #color_breathing_lerp_rainbow(strip)
+        appear_from_back(strip, size=7)
+
+        

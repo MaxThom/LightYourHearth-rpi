@@ -187,22 +187,26 @@ def blink_color(pixels, isCancelled, blink_time=5, wait=0.5, color=(255,0,0)):
         if (isCancelled()):
             return
  
-def appear_from_back(pixels, isCancelled, color=(255, 0, 0)):
+def appear_from_back(pixels, isCancelled, color=(0, 255, 0, 255), wait=0.02, size=3):
     clear(pixels)
-    for i in range(pixels.numPixels()):
-        for j in reversed(range(i, pixels.numPixels())):
-            clear(pixels, False)
-            # first set all pixels at the begin
-            for k in range(i):
-                pixels.setPixelColor(k, Color(color[1], color[2], color[3],  color[0]))
-            # set then the pixel at position j
-            pixels.setPixelColor(j, Color(color[1], color[2], color[3],  color[0]))            
-            if (isCancelled()):
-                return
-            pixels.show()
-            time.sleep(0.02)
-            if (isCancelled()):
-                return
+    while (not isCancelled()):
+        for i in range(int(pixels.numPixels()/size)):
+            for j in reversed(range(i*size, pixels.numPixels()-size)):
+                if (isCancelled()):
+                    return
+                clear(pixels, False)
+                # first set all pixels at the begin
+                for k in range(i*size):
+                    pixels.setPixelColor(k, Color(color[1], color[2], color[3],  color[0]))
+                # set then the pixel at position j
+                for l in range(size):
+                    pixels.setPixelColor(j+l, Color(color[1], color[2], color[3],  color[0]))
+                if (isCancelled()):
+                    return
+                pixels.show()
+                time.sleep(wait)
+                if (isCancelled()):
+                    return
 
 def theaterChase(pixels, isCancelled, color=(255, 0, 0, 0), wait=0.01, is_rainbow=True):
     if (is_rainbow):
@@ -225,20 +229,21 @@ def theaterChase(pixels, isCancelled, color=(255, 0, 0, 0), wait=0.01, is_rainbo
                 pixels.setPixelColor(i + q, 0)
 
 def theaterChaseRainbow(pixels, isCancelled, wait=0.01):
-    for j in range(256):
-        for q in range(3):
-            if (isCancelled()):
-                return
-            for i in range(0, pixels.numPixels(), 3):
-                pixels.setPixelColor(i + q, wheel((i + j) % 255))
-            pixels.show()
-            if (isCancelled()):
-                return
-            time.sleep(wait)
-            if (isCancelled()):
-                return
-            for i in range(0, pixels.numPixels(), 3):
-                pixels.setPixelColor(i + q, 0)
+    while (True):
+        for j in range(256):
+            for q in range(3):
+                if (isCancelled()):
+                    return
+                for i in range(0, pixels.numPixels(), 3):
+                    pixels.setPixelColor(i + q, wheel((i + j) % 255))
+                pixels.show()
+                if (isCancelled()):
+                    return
+                time.sleep(wait)
+                if (isCancelled()):
+                    return
+                for i in range(0, pixels.numPixels(), 3):
+                    pixels.setPixelColor(i + q, 0)
 
 def breathing(pixels, isCancelled, color=(255,0,0,0), move_factor=0.5):    
     mov_max = 100

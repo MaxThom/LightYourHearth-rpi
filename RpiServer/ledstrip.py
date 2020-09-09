@@ -53,8 +53,10 @@ class Ledstrip:
 
     def pixel_appear_from_back(self, args):
         color, isColor = Util.colorTryParse(args["color"])
-        if (isColor):
-            self.__execute_task(LedUtil.appear_from_back, (self.pixels, lambda: self.cancelTask, color))
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        size, isInt = Util.intTryParse(args["size"])
+        if (isColor and isFloat and isInt):
+            self.__execute_task(LedUtil.appear_from_back, (self.pixels, lambda: self.cancelTask, color, wait, size))
         
     def pixel_color_wipe(self, args):
         color, isColor = Util.colorTryParse(args["color"])

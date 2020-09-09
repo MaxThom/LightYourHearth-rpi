@@ -170,6 +170,18 @@ SERVER_CAPABILITIES = {
             "color": { 
                 "type": "color", 
                 "default_value": "#00000000"
+            },
+            "wait": { 
+                "type": "double", 
+                "default_value": 0.02, 
+                "min_value": 0.001, 
+                "max_value": 0.1 
+            },
+            "size": { 
+                "type": "int", 
+                "default_value": 3, 
+                "min_value": 1, 
+                "max_value": 100 
             }
         },
         LED_THEATER_CHASE: { 
