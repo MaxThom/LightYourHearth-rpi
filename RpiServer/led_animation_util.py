@@ -352,6 +352,6 @@ def fireworks(pixels, isCancelled, size=7, color=(0, 0, 0, 255), is_rainbow=True
         pixels.show()
         if (isCancelled()):
                 return
-        time.sleep(0.02)
+        time.sleep(0.005)
         if (isCancelled()):
                 return

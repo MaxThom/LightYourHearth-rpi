@@ -257,7 +257,7 @@ def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_f
                     pixels.setPixelColor(where-j, Color(r, g, b, w))
                     pixels.setPixelColor(where+j, Color(r, g, b, w))
         pixels.show()
-        time.sleep(0.02)
+        time.sleep(0.005)
 
 # Main program logic follows:
 if __name__ == '__main__':
