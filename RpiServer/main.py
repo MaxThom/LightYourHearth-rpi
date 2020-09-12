@@ -80,6 +80,7 @@ commandAction = {
         constants.LED_BREATHING_LERP: pixels.pixel_breathing_lerp,
         constants.LED_BREATHING_RAINBOW: pixels.pixel_breathing_rainbow,
         constants.LED_FIREWORKS: pixels.pixel_fireworks,
+        constants.LED_LABYRINTH: pixels.pixel_labyrinth,
         constants.LED_SET_BRIGHTNESS: pixels.set_brightness,
         constants.LED_SETTINGS: pixels.set_settings,
         constants.LED_ANIMATION_CAPABILITIES: get_server_capabilities        

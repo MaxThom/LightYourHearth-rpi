@@ -1,4 +1,12 @@
 from PIL import ImageColor
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int
+    x_v: int
+    y: int = 0    
+    y_v: int = 0
 
 def intTryParse(value):
     try:
@@ -28,7 +36,6 @@ def colorTryParse(value):
         tempColor = ImageColor.getcolor(value, "RGBA")
         #ARGB
         color = (255 - tempColor[0], tempColor[1], tempColor[2], tempColor[3])
-        print(color)
         return color, True
     except Exception:
         return value, False            

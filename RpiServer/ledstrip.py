@@ -117,6 +117,14 @@ class Ledstrip:
         if (isColor and isBool and isInt and isInt1 and isInt2 and isInt3 and isInt4):
             self.__execute_task(LedUtil.fireworks, (self.pixels, lambda: self.cancelTask, size, color, is_rainbow, number_of_fireworks, chance_of_explosion, fade_step, firework_fade))     
 
+    def pixel_labyrinth(self, args):
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        color, isColor = Util.colorTryParse(args["color"])
+        contact_color, isColor2 = Util.colorTryParse(args["contact_color"])        
+        count, isInt = Util.intTryParse(args["count"])
+        turn_chance, isInt2 = Util.intTryParse(args["turn_chance"])
+        if (isColor and isColor2 and isFloat and isInt and isInt2):
+            self.__execute_task(LedUtil.labyrinth, (self.pixels, lambda: self.cancelTask, wait, count, turn_chance, color, contact_color))
 
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])

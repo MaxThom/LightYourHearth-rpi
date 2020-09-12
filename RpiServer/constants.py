@@ -17,6 +17,7 @@ LED_BREATHING = "Led_Breathing"
 LED_BREATHING_LERP = "Led_Breathing_Lerp"
 LED_BREATHING_RAINBOW = "Led_Breathing_Rainbow"
 LED_FIREWORKS = "Led_Fireworks"
+LED_LABYRINTH = "Led_Labyrinth"
 
 LED_SETTINGS = "Led_Settings"
 LED_ANIMATION_CAPABILITIES = "Led_Animation_Capabilities"
@@ -281,6 +282,34 @@ SERVER_CAPABILITIES = {
                 "default_value": 70, 
                 "min_value": 1, 
                 "max_value": 100 
+            }
+        },
+        LED_LABYRINTH: {
+            "color": { 
+                "type": "color", 
+                "default_value": "#FF0000FF"
+            },
+            "contact_color": { 
+                "type": "color", 
+                "default_value": "#FF888888"
+            },
+            "wait": {
+                "type": "double",
+                "default_value": 0.05, 
+                "min_value": 0.001, 
+                "max_value": 0.1 
+            },
+            "count": {
+                "type": "int",
+                "default_value": 5, 
+                "min_value": 1, 
+                "max_value": 100 
+            },
+            "turn_chance": {
+                "type": "int",
+                "default_value": 2, 
+                "min_value": 1, 
+                "max_value": 20
             }
         }
     }

@@ -1,6 +1,8 @@
 import time
 import math
 from random import *
+from dataclasses import dataclass
+
 
 from rpi_ws281x import Color, PixelStrip, ws
 
@@ -259,6 +261,62 @@ def fireworks(pixels, size=7, color=(0, 0, 0, 255), is_rainbow=True, number_of_f
         pixels.show()
         time.sleep(0.005)
 
+def labyrinth(pixels, wait=0.05, count=5, color=(0,0,255,0), contact_color=(127, 127, 127, 0), turn_chance=2):
+    points = []
+    points_location = {}
+    points_contact = {}
+    for i in range(count):
+        start = randint(0, pixels.numPixels())
+        velocity = randint(0, 1)
+        if (velocity == 0):
+            velocity = -1
+        points.append(Point(start, velocity))
+
+    while (True):
+        for i in range(len(points)):
+            # Clear
+            if (not points[i].x in points_contact):
+                pixels.setPixelColor(points[i].x, Color(0, 0, 0, 0))
+            # Next move
+            velocity = randint(0, 100)
+            if (velocity <= turn_chance):
+                points[i].x_v *= -1
+            points[i].x += points[i].x_v
+            points[i].x %= pixels.numPixels()
+            if points[i].x in points_location:
+                points_location[points[i].x] += 1
+            else:
+                points_location[points[i].x] = 1
+            if (points[i].x+points[i].x_v) in points_location:
+                points_location[points[i].x+points[i].x_v] += 1
+            else:
+                points_location[points[i].x+points[i].x_v] = 1
+            # Show            
+            pixels.setPixelColor(points[i].x, Color(color[0], color[1], color[2], color[3]))
+        for key, value in points_location.items():
+            if (value > 1):
+                points_contact[key] = 1
+        for key in list(points_contact.keys()):
+            value = points_contact[key]
+            pixels.setPixelColor(key, Color(int(contact_color[0]*value), int(contact_color[1]*value), int(contact_color[2]*value), int(contact_color[3]*value)))
+            points_contact[key] = round(points_contact[key]-0.05, 2)
+            if (points_contact[key]  < 0):
+                points_contact.pop(key)
+
+        pixels.show()
+        points_location.clear()
+        time.sleep(wait)
+
+@dataclass
+class Point:
+    x: int
+    x_v: int
+    y: int = 0    
+    y_v: int = 0
+
+
+
+
 # Main program logic follows:
 if __name__ == '__main__':
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
@@ -292,6 +350,7 @@ if __name__ == '__main__':
         #color_breathing_lerp(strip)
         #color_breathing_lerp_rainbow(strip)
         #appear_from_back(strip, size=7)
-        fireworks(strip)
+        #fireworks(strip)
+        labyrinth(strip)
 
         
