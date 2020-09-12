@@ -358,6 +358,7 @@ def fireworks(pixels, isCancelled, size=7, color=(0, 0, 0, 255), is_rainbow=True
                 return
 
 def labyrinth(pixels, isCancelled, wait=0.05, count=5, turn_chance=2, color=(0,0,0,255), contact_color=(0, 127, 127, 127)):
+    clear(pixels, False)
     points = []
     points_location = {}
     points_contact = {}
