@@ -100,7 +100,7 @@ MIT
 *September 2020*
 - [ ] APP - Create playlist for animations
 - [ ] APP - Create sections on the ledstrip for animations to target those sections
-- [ ] RPI - Add more animations
+- [x] RPI - Add more animations
 - [X] RPI - Add different ledstrip type (SK6812)
 
 
