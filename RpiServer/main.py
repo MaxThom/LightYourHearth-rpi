@@ -31,23 +31,25 @@ def launch_bluetooth_server(args):
 def on_bluetooth_message_received(msg):
     global blue_comm
     print(msg)
+    all_commands = msg.split('&')
+    all_commands.pop(0)
+    for cmd in all_commands:
+        arr = cmd.split(":")
+        name = arr[0]
+        args = {}
+        if (len(arr) > 1 and arr[1]):
+            arg_str = arr[1]    
+            for val in arg_str.split(","):
+                key_value = val.split("=")
+                args[key_value[0]] = key_value[1]        
 
-    arr = msg.split(":")
-    cmd = arr[0]
-    args = {}
-    if (len(arr) > 1 and arr[1]):
-        arg_str = arr[1]    
-        for val in arg_str.split(","):
-            key_value = val.split("=")
-            args[key_value[0]] = key_value[1]        
+        print(name)
+        pprint.pprint(args)
 
-    print(cmd)
-    pprint.pprint(args)
-
-    if cmd in commandAction:
-        commandAction[cmd](args)
-    else:
-        print("Unknown command")
+        if name in commandAction:
+            commandAction[name](args)
+        else:
+            print("Unknown command")
 
 def get_server_capabilities(args):
     global blue_comm
