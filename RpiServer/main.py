@@ -32,7 +32,8 @@ def on_bluetooth_message_received(msg):
     global blue_comm
     print(msg)
     all_commands = msg.split('&')
-    all_commands.pop(0)
+    if (len(all_commands) > 1):
+        all_commands.pop(0)
     for cmd in all_commands:
         arr = cmd.split(":")
         name = arr[0]
