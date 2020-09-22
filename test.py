@@ -1,28 +1,16 @@
+import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 
-import numpy as np
-import matplotlib.pyplot as plot
+i = 0
+def button_callback(channel):
+    global i
+    i += 1
+    print("Button was pushed! " + str(i))
 
-# Get x values of the sine wave
-time        = np.arange(0, 10, 0.1)
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 
-# Amplitude of the sine wave is sine of a variable like time
-amplitude   = np.sin(time) 
+GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
 
-# Plot a sine wave using time and amplitude obtained for the sine wave
-plot.plot(time, amplitude) 
-
-# Give a title for the sine wave plot
-plot.title('Sine wave') 
-
-# Give x axis label for the sine wave plot
-plot.xlabel('Time')
-
-# Give y axis label for the sine wave plot
-plot.ylabel('Amplitude = sin(time)') 
-
-plot.grid(True, which='both')
-plot.axhline(y=0, color='k')
-plot.show()
-# Display the sine wave
-
-plot.show()
+message = input("Press enter to quit\n\n") # Run until someone presses enter
+GPIO.cleanup() # Clean up    

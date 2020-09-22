@@ -1,5 +1,6 @@
 from blue_connect import BluetoothComm 
 from ledstrip import Ledstrip
+from button_manager import ButtonManager
 import subprocess
 import constants
 import pprint
@@ -11,16 +12,17 @@ import datetime
 # pip freeze > requirements.txt
 # pip install -r requirements.txt
 
-pixels = Ledstrip() 
-blue_comm = None
-
 def main():
     global blue_comm
     try:
         launch_bluetooth_server("")
     except Exception as e:         
         log_message(e)
+        btn_manager.close()
         blue_comm.close()
+
+def button_callback(channel):
+    pixels.pixel_off(None)
 
 def launch_bluetooth_server(args):
     global blue_comm
@@ -65,6 +67,9 @@ def log_message(msg):
     f.write("[%s] -> %s.\n" % (datetime.datetime.now(), msg))
     f.close()
    
+btn_manager = ButtonManager(button_callback)
+pixels = Ledstrip() 
+blue_comm = None
 
 commandAction = {
         constants.BLUETOOTH_DISCONNECT: launch_bluetooth_server,         
