@@ -22,8 +22,15 @@ def main():
         blue_comm.close()
 
 def button_callback(channel):
-    pixels.pixel_off(None)
-
+    global is_off
+    global last_command
+    if (is_off and last_command[0] != None):
+        is_off = False
+        commandAction[last_command[0]](last_command[1])
+    else:
+        is_off = True
+        pixels.pixel_off(None)
+        
 def launch_bluetooth_server(args):
     global blue_comm
     blue_comm = BluetoothComm()
@@ -32,6 +39,7 @@ def launch_bluetooth_server(args):
 
 def on_bluetooth_message_received(msg):
     global blue_comm
+    global last_command
     print(msg)
     all_commands = msg.split('&')
     if (len(all_commands) > 1):
@@ -50,6 +58,7 @@ def on_bluetooth_message_received(msg):
         pprint.pprint(args)
 
         if name in commandAction:
+            last_command = (name, args)
             commandAction[name](args)
         else:
             print("Unknown command")
@@ -70,6 +79,8 @@ def log_message(msg):
 btn_manager = ButtonManager(button_callback)
 pixels = Ledstrip() 
 blue_comm = None
+is_off = False
+last_command = (None, None)
 
 commandAction = {
         constants.BLUETOOTH_DISCONNECT: launch_bluetooth_server,         
