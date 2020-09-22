@@ -9,12 +9,12 @@ class ButtonManager:
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(10, GPIO.RISING, callback=button_callback)
+        GPIO.add_event_detect(10, GPIO.RISING, callback=self.button_callback)
 
     def button_callback(self, channel):
         now = datetime.datetime.now()
         diff = (now - self.last_button_click)        
-        if (diff.total_seconds > 1):
+        if (diff.total_seconds() >= 0.5):
             self.last_button_click = now
             self.callback(channel)        
 

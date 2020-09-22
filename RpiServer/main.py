@@ -24,7 +24,7 @@ def main():
 def button_callback(channel):
     global is_off
     global last_command
-    if (is_off and last_command[0] != None):
+    if (is_off and last_command[0] != constants.LED_OFF):
         is_off = False
         commandAction[last_command[0]](last_command[1])
     else:
@@ -58,7 +58,11 @@ def on_bluetooth_message_received(msg):
         pprint.pprint(args)
 
         if name in commandAction:
-            last_command = (name, args)
+            if (name != constants.LED_SET_BRIGHTNESS 
+                and name != constants.LED_SETTINGS 
+                and name != constants.LED_ANIMATION_CAPABILITIES 
+                and name != constants.BLUETOOTH_DISCONNECT):
+                last_command = (name, args)
             commandAction[name](args)
         else:
             print("Unknown command")
@@ -80,7 +84,7 @@ btn_manager = ButtonManager(button_callback)
 pixels = Ledstrip() 
 blue_comm = None
 is_off = False
-last_command = (None, None)
+last_command = (constants.LED_OFF, None)
 
 commandAction = {
         constants.BLUETOOTH_DISCONNECT: launch_bluetooth_server,         
