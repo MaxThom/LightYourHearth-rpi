@@ -40,6 +40,7 @@ def launch_bluetooth_server(args):
 def on_bluetooth_message_received(msg):
     global blue_comm
     global last_command
+    global is_off
     print(msg)
     all_commands = msg.split('&')
     if (len(all_commands) > 1):
@@ -63,6 +64,7 @@ def on_bluetooth_message_received(msg):
                 and name != constants.LED_ANIMATION_CAPABILITIES 
                 and name != constants.BLUETOOTH_DISCONNECT):
                 last_command = (name, args)
+                is_off = False
             commandAction[name](args)
         else:
             print("Unknown command")
