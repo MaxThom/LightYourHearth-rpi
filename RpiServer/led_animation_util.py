@@ -56,18 +56,24 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
     clear(pixels)
     for i in range(pixels.numPixels()):
         for j in range(i, i+size1):
-            time.sleep(wait)
+            print("1: " + j)
+            if (wait != 0.0): 
+                time.sleep(wait)
+                pixels.show()
             pixels.setPixelColor(j, Color(color1[1], color1[2], color1[3],  color1[0]))
         i += size1
 
         for j in range(i, i+size2):
-            time.sleep(wait)
+            print("2: " + j)
+            if (wait != 0.0): 
+                time.sleep(wait)
+                pixels.show()
             pixels.setPixelColor(j, Color(color2[1], color2[2], color2[3],  color2[0]))
         i += size2
 
         if (isCancelled()):
             break        
-        pixels.show()
+    pixels.show()
 
 def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=50, loop_forever=True):
     step = pixels.numPixels() * max(abs(100 - fade_step), 1) / 50
