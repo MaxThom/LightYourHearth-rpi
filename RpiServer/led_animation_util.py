@@ -56,16 +56,16 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
     clear(pixels)
 
     if (with_animation):
-        tmp0 = color1[0]-fade_step
-        tmp1 = color1[1]-fade_step
-        tmp2 = color1[2]-fade_step
-        tmp3 = color1[3]-fade_step
+        tmp0 = color1[0] - fade_step
+        tmp1 = color1[1] - fade_step
+        tmp2 = color1[2] - fade_step
+        tmp3 = color1[3] - fade_step
         color1=(tmp0,tmp1,tmp2, tmp3)
 
-        tmp0 = color2[0]-fade_step
-        tmp1 = color2[1]-fade_step
-        tmp2 = color2[2]-fade_step
-        tmp3 = color2[3]-fade_step
+        tmp0 = color2[0] - fade_step
+        tmp1 = color2[1] - fade_step
+        tmp2 = color2[2] - fade_step
+        tmp3 = color2[3] - fade_step
         color2=(tmp0,tmp1,tmp2, tmp3)
 
     i = 0
