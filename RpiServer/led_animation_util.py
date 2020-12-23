@@ -113,12 +113,13 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
                             b = int(max(0, c.b + (fade_step/5 * k)))
                             pixels.setPixelColor(j, Color(r, g, b))
                         k += 1
-                pixels.show()
-                if (isCancelled()):
-                    return
-                time.sleep(wait)
-                if (isCancelled()):
-                    return
+
+                    pixels.show()
+                    if (isCancelled()):
+                        return
+                    time.sleep(wait)
+                    if (isCancelled()):
+                        return
 
 def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=50, loop_forever=True):
     step = pixels.numPixels() * max(abs(100 - fade_step), 1) / 50
