@@ -126,6 +126,17 @@ class Ledstrip:
         if (isColor and isColor2 and isFloat and isInt and isInt2):
             self.__execute_task(LedUtil.labyrinth, (self.pixels, lambda: self.cancelTask, wait, count, turn_chance, color, contact_color))
 
+    def pixel_color_pair(self, args):
+        wait, isFloat = Util.floatTryParse(args["wait"])
+        color1, isColor1 = Util.colorTryParse(args["color1"])
+        color2, isColor2 = Util.colorTryParse(args["color2"])
+        size1, isInt1 = Util.intTryParse(args["size1"])
+        size2, isInt2 = Util.intTryParse(args["size2"])        
+        
+        if (isColor1 and isColor2 and isFloat and isInt1 and isInt2):
+            self.__execute_task(LedUtil.color_pair, (self.pixels, lambda: self.cancelTask, wait, color1, color2, size1, size2))
+            
+
     def set_brightness(self, args):
         brightness, isInt = Util.intTryParse(args["brightness"])
         if (isInt):

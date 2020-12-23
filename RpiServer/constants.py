@@ -9,6 +9,7 @@ LED_BRIGHTNESS_DECREASE = "Led_Brightness_Decrease"
 LED_BLINK_COLOR = "Led_Blink_Color"
 LED_APPEAR_FROM_BACK = "Led_Appear_From_Back"
 LED_COLOR_WIPE = "Led_Color_Wipe"
+LED_COLOR_PAIR = "Led_Color_Pair"
 LED_COLOR_WIPE_CYCLE = "Led_Color_Wipe_Cycle"
 LED_COLOR_WIPE_RAINBOW = "Led_Color_Wipe_Rainbow"
 LED_SET_BRIGHTNESS = "Led_Set_Brightness"
@@ -54,6 +55,34 @@ SERVER_CAPABILITIES = {
             "should_clear": {
                 "type": "boolean", 
                 "default_value": "False",
+            }
+        },
+        LED_COLOR_PAIR: { 
+            "wait": { 
+                "type": "double", 
+                "default_value": 0.00, 
+                "min_value": 0, 
+                "max_value": 0.25 
+            },
+            "color1": { 
+                "type": "color", 
+                "default_value": "#FFFF0000"
+            },
+            "color2": { 
+                "type": "color", 
+                "default_value": "#FF00FF00"
+            },
+            "size1": {
+                "type": "int", 
+                "default_value": 3, 
+                "min_value": 1, 
+                "max_value": 100 
+            },
+            "size2": {
+                "type": "int", 
+                "default_value": 3, 
+                "min_value": 1, 
+                "max_value": 100 
             }
         },
         LED_COLOR_WIPE_CYCLE: { 

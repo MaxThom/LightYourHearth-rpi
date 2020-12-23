@@ -11,6 +11,10 @@ import datetime
 # sudo kill -9 [pid]
 # pip freeze > requirements.txt
 # pip install -r requirements.txt
+ 
+# sudo systemctl status lightyourhearth.service
+# sudo systemctl enable lightyourhearth.service
+# sudo systemctl disable lightyourhearth.service
 
 def main():
     global blue_comm
@@ -98,6 +102,7 @@ commandAction = {
         constants.LED_BLINK_COLOR: pixels.pixel_blink_color,
         constants.LED_APPEAR_FROM_BACK: pixels.pixel_appear_from_back,
         constants.LED_COLOR_WIPE: pixels.pixel_color_wipe,
+        constants.LED_COLOR_PAIR: pixels.pixel_color_pair,
         constants.LED_COLOR_WIPE_CYCLE: pixels.pixel_color_wipe_cycle,
         constants.LED_COLOR_WIPE_RAINBOW: pixels.pixel_color_wipe_rainbow,
         constants.LED_THEATER_CHASE: pixels.pixel_theater_chase,
