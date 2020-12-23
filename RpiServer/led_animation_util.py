@@ -55,11 +55,8 @@ def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_c
 def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=(255,255,255, 255), size1=3, size2=3, with_animation=False, fade_step=50):
     clear(pixels)
 
-    if (with_animation):
-        step_tuple = (fade_step, fade_step, fade_step, fade_step)
-        color1 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color1, step_tuple)) 
-        color2 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color2, step_tuple))
-
+    #if (with_animation):
+        
     i = 0
     while i < pixels.numPixels():
         for j in range(i, i+size1):
@@ -74,9 +71,11 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
             return        
     pixels.show()
 
-    print(color1)
-    print(color2)
-    if (with_animation):        
+    if (with_animation):
+        step_tuple = (fade_step, fade_step, fade_step, fade_step)
+        color1 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color1, step_tuple)) 
+        color2 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color2, step_tuple))
+
         while (True):            
             for l in range(pixels.numPixels()):
                 i = 0
