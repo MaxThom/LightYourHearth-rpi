@@ -79,7 +79,6 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
             for l in range(pixels.numPixels()):
                 i = 0
                 while i < pixels.numPixels():
-                    l = i
                     for j in range(i, i+size1):
                         pixels.setPixelColor(j, Color(color1[1], color1[2], color1[3]))
                     i += size1
