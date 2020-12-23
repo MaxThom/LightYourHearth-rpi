@@ -56,22 +56,10 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
     clear(pixels)
 
     if (with_animation):
-        print(color1)
-        c0 = int(color1[0])
-        c1 = int(color1[0])
-        c2 = int(color1[0])
-        c3 = int(color1[0])
-        print(type(c0))
-        print(c0)
-        print(type(fade_step))
-        print(fade_step)
-        c0 -= fade_step
-        c1 -= fade_step
-        c2 -= fade_step
-        c3 -= fade_step
-        color1 = (c0, c1, c2, c3)
-
-
+        step_tuple = (fade_step, fade_step, fade_step, fade_step)
+        color1 = tuple(map(lambda i, j: i - j, color1, step_tuple)) 
+        color2 = tuple(map(lambda i, j: i - j, color2, step_tuple)) 
+        
     i = 0
     while i < pixels.numPixels():
         for j in range(i, i+size1):
