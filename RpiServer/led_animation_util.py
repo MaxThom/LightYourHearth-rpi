@@ -93,26 +93,36 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
                         return        
             
                 c = pixels.getPixelColorRGB(l)
-                r = int(max(0, c.r + fade_step))
-                g = int(max(0, c.g + fade_step))
-                b = int(max(0, c.b + fade_step))
+                r = c.r
+                if (r > 0): r = int(max(0, c.r + fade_step))
+                g = c.g
+                if (g > 0): g = int(max(0, c.g + fade_step))
+                b = c.b
+                if (b > 0): b = int(max(0, c.b + fade_step))                
+                
                 pixels.setPixelColor(l, Color(r, g, b))
                 k = 5
                 for j in range(l+1, l+5):
                     if (j < pixels.numPixels()):
                         c = pixels.getPixelColorRGB(j)
-                        r = int(max(0, c.r + (fade_step/5 * k)))
-                        g = int(max(0, c.g + (fade_step/5 * k)))
-                        b = int(max(0, c.b + (fade_step/5 * k)))
+                        r = c.r
+                        if (r > 0): r = int(max(0, c.r + (fade_step/5 * k)))
+                        g = c.g
+                        if (g > 0): r = int(max(0, c.g + (fade_step/5 * k)))
+                        b = c.b
+                        if (b > 0): r = int(max(0, c.b + (fade_step/5 * k)))
                         pixels.setPixelColor(j, Color(r, g, b))
                     k -= 1
                 k = 1
                 for j in range(l-5, l-1):
                     if (j >= 0):
                         c = pixels.getPixelColorRGB(j)
-                        r = int(max(0, c.r + (fade_step/5 * k)))
-                        g = int(max(0, c.g + (fade_step/5 * k)))
-                        b = int(max(0, c.b + (fade_step/5 * k)))
+                        r = c.r
+                        if (r > 0): r = int(max(0, c.r + (fade_step/5 * k)))
+                        g = c.g
+                        if (g > 0): r = int(max(0, c.g + (fade_step/5 * k)))
+                        b = c.b
+                        if (b > 0): r = int(max(0, c.b + (fade_step/5 * k)))
                         pixels.setPixelColor(j, Color(r, g, b))
                     k += 1
 
