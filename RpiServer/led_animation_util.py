@@ -56,7 +56,7 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
     clear(pixels)
     for i in range(pixels.numPixels()):
         for j in range(i, i+size1):
-            print("1: " + j)
+            print("1: " + str(j))
             if (wait != 0.0): 
                 time.sleep(wait)
                 pixels.show()
@@ -64,7 +64,7 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
         i += size1
 
         for j in range(i, i+size2):
-            print("2: " + j)
+            print("2: " + str(j))
             if (wait != 0.0): 
                 time.sleep(wait)
                 pixels.show()
