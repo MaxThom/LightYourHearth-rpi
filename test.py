@@ -1,16 +1,8 @@
-import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+color1 = (40, 255, 255, 255)
+color2 = (255, 255, 255, 255)
 
-i = 0
-def button_callback(channel):
-    global i
-    i += 1
-    print("Button was pushed! " + str(i))
-
-GPIO.setwarnings(False) # Ignore warning for now
-GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_UP) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
-
-GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
-
-message = input("Press enter to quit\n\n") # Run until someone presses enter
-GPIO.cleanup() # Clean up    
+step_tuple = (50, 50, 50, 50)
+color1 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color1, step_tuple)) 
+color2 = tuple(map(lambda i, j: i - j, color2, step_tuple)) 
+print(color1)
+print(color2)

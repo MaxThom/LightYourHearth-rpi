@@ -57,9 +57,9 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
 
     if (with_animation):
         step_tuple = (fade_step, fade_step, fade_step, fade_step)
-        color1 = tuple(map(lambda i, j: i - j, color1, step_tuple)) 
-        color2 = tuple(map(lambda i, j: i - j, color2, step_tuple)) 
-        
+        color1 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color1, step_tuple)) 
+        color2 = tuple(map(lambda i, j: i-j if i - j > 0 else 0, color2, step_tuple))
+
     i = 0
     while i < pixels.numPixels():
         for j in range(i, i+size1):
