@@ -90,9 +90,9 @@ SERVER_CAPABILITIES = {
             },
             "fade_step": {
                 "type": "int", 
-                "default_value": 50, 
+                "default_value": 100, 
                 "min_value": 1, 
-                "max_value": 100 
+                "max_value": 200 
             }
         },
         LED_COLOR_WIPE_CYCLE: { 
