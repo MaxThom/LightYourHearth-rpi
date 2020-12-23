@@ -74,29 +74,41 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
             return        
     pixels.show()
 
-    if (with_animation):
-        
+    if (with_animation):        
         while (True):
-            for i in range(pixels.numPixels()):
-                c = pixels.getPixelColorRGB(i)
-                r = int(max(0, c.r + fade_step))
-                g = int(max(0, c.g + fade_step))
-                b = int(max(0, c.b + fade_step))
-                pixels.setPixelColor(i, Color(r, g, b))
-                for j in range(i, i+5):
-                    if (j < pixels.numPixels()):
-                        c = pixels.getPixelColorRGB(j)
-                        r = int(max(0, c.r + (fade_step/5 * j)))
-                        g = int(max(0, c.g + (fade_step/5 * j)))
-                        b = int(max(0, c.b + (fade_step/5 * j)))
-                        pixels.setPixelColor(j, Color(r, g, b))
-                for j in range(i-5, i):
-                    if (j >= 0):
-                        c = pixels.getPixelColorRGB(j)
-                        r = int(max(0, c.r + (fade_step/5 * j)))
-                        g = int(max(0, c.g + (fade_step/5 * j)))
-                        b = int(max(0, c.b + (fade_step/5 * j)))
-                        pixels.setPixelColor(j, Color(r, g, b))
+            for l in range(pixels.numPixels()):
+                i = 0
+                while i < pixels.numPixels():
+                    for j in range(i, i+size1):
+                        pixels.setPixelColor(j, Color(color1[1], color1[2], color1[3],  color1[0]))
+                    i += size1
+
+                    for j in range(i, i+size2):
+                        pixels.setPixelColor(j, Color(color2[1], color2[2], color2[3],  color2[0]))
+                    i += size2
+
+                    if (isCancelled()):
+                        return        
+                
+                    c = pixels.getPixelColorRGB(l)
+                    r = int(max(0, c.r + fade_step))
+                    g = int(max(0, c.g + fade_step))
+                    b = int(max(0, c.b + fade_step))
+                    pixels.setPixelColor(i, Color(r, g, b))
+                    for j in range(l+1, l+5):
+                        if (j < pixels.numPixels()):
+                            c = pixels.getPixelColorRGB(j)
+                            r = int(max(0, c.r + (fade_step/5 * j)))
+                            g = int(max(0, c.g + (fade_step/5 * j)))
+                            b = int(max(0, c.b + (fade_step/5 * j)))
+                            pixels.setPixelColor(j, Color(r, g, b))
+                    for j in range(l-5, l-1):
+                        if (j >= 0):
+                            c = pixels.getPixelColorRGB(j)
+                            r = int(max(0, c.r + (fade_step/5 * j)))
+                            g = int(max(0, c.g + (fade_step/5 * j)))
+                            b = int(max(0, c.b + (fade_step/5 * j)))
+                            pixels.setPixelColor(j, Color(r, g, b))
                 pixels.show()
                 if (isCancelled()):
                     return
