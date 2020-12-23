@@ -74,6 +74,8 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
             return        
     pixels.show()
 
+    print(color1)
+    print(color2)
     if (with_animation):        
         while (True):            
             for l in range(pixels.numPixels()):
