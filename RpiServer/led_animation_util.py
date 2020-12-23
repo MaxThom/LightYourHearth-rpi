@@ -95,7 +95,7 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
                     g = int(max(0, c.g + fade_step))
                     b = int(max(0, c.b + fade_step))
                     pixels.setPixelColor(i, Color(r, g, b))
-                    k = 1
+                    k = 5
                     for j in range(l+1, l+5):
                         if (j < pixels.numPixels()):
                             c = pixels.getPixelColorRGB(j)
@@ -106,8 +106,8 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
                             print(str(g))
                             print(str(b))
                             pixels.setPixelColor(j, Color(r, g, b))
-                        k += 1
-                    k = 1
+                        k -= 1
+                    k = 5
                     for j in range(l-5, l-1):
                         if (j >= 0):
                             c = pixels.getPixelColorRGB(j)
@@ -118,7 +118,7 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
                             print(str(g))
                             print(str(b))
                             pixels.setPixelColor(j, Color(r, g, b))
-                        k += 1
+                        k -= 1
                 pixels.show()
                 if (isCancelled()):
                     return
