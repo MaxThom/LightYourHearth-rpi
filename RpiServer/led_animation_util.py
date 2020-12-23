@@ -56,10 +56,13 @@ def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=
     clear(pixels)
 
     if (with_animation):
+        print(color1)
         c0 = int(color1[0])
         c1 = int(color1[0])
         c2 = int(color1[0])
         c3 = int(color1[0])
+        print(type(c0))
+        print(c0)
         c0 -= fade_step
         c1 -= fade_step
         c2 -= fade_step
