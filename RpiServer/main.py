@@ -15,6 +15,8 @@ import datetime
 # sudo systemctl status lightyourhearth.service
 # sudo systemctl enable lightyourhearth.service
 # sudo systemctl disable lightyourhearth.service
+# sudo systemctl start lightyourhearth.service
+# sudo systemctl stop lightyourhearth.service
 
 def main():
     global blue_comm
