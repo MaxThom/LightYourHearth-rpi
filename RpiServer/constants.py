@@ -83,6 +83,16 @@ SERVER_CAPABILITIES = {
                 "default_value": 3, 
                 "min_value": 1, 
                 "max_value": 100 
+            },
+            "with_animation": {
+                "type": "boolean", 
+                "default_value": "False",
+            },
+            "fade_step": {
+                "type": "int", 
+                "default_value": 50, 
+                "min_value": 1, 
+                "max_value": 100 
             }
         },
         LED_COLOR_WIPE_CYCLE: { 

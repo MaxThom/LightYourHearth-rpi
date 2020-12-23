@@ -52,29 +52,56 @@ def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_c
             pixels.show()
     pixels.show()
 
-def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=(255,255,255, 255), size1=3, size2=3):
+def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=(255,255,255, 255), size1=3, size2=3, with_animation=False, fade_step=50):
     clear(pixels)
+
+    if (with_animation):
+        color1=(color1[0]-fade_step, color1[1]-fade_step, color1[2]-fade_step, color1[3]-fade_step)
+        color2=(color2[0]-fade_step, color2[1]-fade_step, color2[2]-fade_step, color2[3]-fade_step)
+
     i = 0
     while i < pixels.numPixels():
         for j in range(i, i+size1):
-            print("1: " + str(j))
-            if (wait != 0.0): 
-                time.sleep(wait)
-                pixels.show()
             pixels.setPixelColor(j, Color(color1[1], color1[2], color1[3],  color1[0]))
         i += size1
 
         for j in range(i, i+size2):
-            print("2: " + str(j))
-            if (wait != 0.0): 
-                time.sleep(wait)
-                pixels.show()
             pixels.setPixelColor(j, Color(color2[1], color2[2], color2[3],  color2[0]))
         i += size2
 
         if (isCancelled()):
-            break        
+            return        
     pixels.show()
+
+    if (with_animation):
+        
+        while (True):
+            for i in range(pixels.numPixels()):
+                c = pixels.getPixelColorRGB(i)
+                r = int(max(0, c.r + fade_step))
+                g = int(max(0, c.g + fade_step))
+                b = int(max(0, c.b + fade_step))
+                pixels.setPixelColor(i, Color(r, g, b))
+                for j in range(i, i+5):
+                    if (j < pixels.numPixels()):
+                        c = pixels.getPixelColorRGB(j)
+                        r = int(max(0, c.r + (fade_step/5 * j)))
+                        g = int(max(0, c.g + (fade_step/5 * j)))
+                        b = int(max(0, c.b + (fade_step/5 * j)))
+                        pixels.setPixelColor(j, Color(r, g, b))
+                for j in range(i-5, i):
+                    if (j >= 0):
+                        c = pixels.getPixelColorRGB(j)
+                        r = int(max(0, c.r + (fade_step/5 * j)))
+                        g = int(max(0, c.g + (fade_step/5 * j)))
+                        b = int(max(0, c.b + (fade_step/5 * j)))
+                        pixels.setPixelColor(j, Color(r, g, b))
+                pixels.show()
+                if (isCancelled()):
+                    return
+                time.sleep(wait)
+                if (isCancelled()):
+                    return
 
 def color_wipe_cycle(pixels, isCancelled, wait=0.01, color=(255,255,255, 255), fade_step=50, loop_forever=True):
     step = pixels.numPixels() * max(abs(100 - fade_step), 1) / 50
