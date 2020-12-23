@@ -54,7 +54,8 @@ def color_wipe(pixels, isCancelled, wait=0.0, color=(255,255,255, 255), should_c
 
 def color_pair(pixels, isCancelled, wait=0.0, color1=(255,255,255, 255), color2=(255,255,255, 255), size1=3, size2=3):
     clear(pixels)
-    for i in range(pixels.numPixels()):
+    i = 0
+    while i < pixels.numPixels():
         for j in range(i, i+size1):
             print("1: " + str(j))
             if (wait != 0.0): 
