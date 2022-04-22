@@ -78,6 +78,10 @@ The phone app used to connect and control the ledstrip is made with Xamarin. I u
  9. Reboot
     - sudo reboot
 
+# Circuit
+
+![circuit diagram](light-your-hearth_diagram.jpg)
+
 # Credits
 n/a
 
